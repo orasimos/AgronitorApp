@@ -13,6 +13,9 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.io.IOException;
 
 import gr.aueb.cf.agronitor.apiclient.ApiClient;
+import gr.aueb.cf.agronitor.apiclient.IApiService;
+import gr.aueb.cf.agronitor.apiclient.register.RegisterRequest;
+import gr.aueb.cf.agronitor.apiclient.register.RegisterResponse;
 import gr.aueb.cf.agronitor.models.User;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,63 +44,59 @@ public class RegisterActivity extends AppCompatActivity {
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String username = usernameET.getText().toString().trim();
+                String email = emailET.getText().toString().trim();
+                String password = passwordET.getText().toString().trim();
+                String passwordConf = confirmPasswordET.getText().toString().trim();
+
+                if (username.isEmpty()) {
+                    usernameET.setError("Username is required");
+                    usernameET.requestFocus();
+                    return;
+                } else if (password.isEmpty()) {
+                    passwordET.setError("Password is required");
+                    passwordET.requestFocus();
+                    return;
+                } else if (passwordConf.isEmpty()) {
+                    confirmPasswordET.setError("Confirm your password");
+                    confirmPasswordET.requestFocus();
+                    return;
+                } else if (!password.equals(passwordConf)) {
+                    confirmPasswordET.setError("Confirm your password");
+                    confirmPasswordET.requestFocus();
+                    return;
+                } else if (email.isEmpty()) {
+                    emailET.setError("Email is required");
+                    emailET.requestFocus();
+                }
                 registerUser();
             }
         });
     }
 
     private void registerUser() {
-        String username = usernameET.getText().toString().trim();
-        String email = emailET.getText().toString().trim();
-        String password = passwordET.getText().toString().trim();
-        String passwordConf = confirmPasswordET.getText().toString().trim();
-
-        if (username.isEmpty()) {
-            usernameET.setError("Username is required");
-            usernameET.requestFocus();
-            return;
-        } else if (password.isEmpty()) {
-            passwordET.setError("Password is required");
-            passwordET.requestFocus();
-            return;
-        } else if (passwordConf.isEmpty()) {
-            confirmPasswordET.setError("Confirm your password");
-            confirmPasswordET.requestFocus();
-            return;
-        } else if (!password.equals(passwordConf)) {
-            confirmPasswordET.setError("Confirm your password");
-            confirmPasswordET.requestFocus();
-            return;
-        } else if (email.isEmpty()) {
-            emailET.setError("Email is required");
-            emailET.requestFocus();
-        }
-
-        Call<ResponseBody> call = ApiClient.getInstance().getApi().registerUser(new User(username, email, password));
-
-        call.enqueue(new Callback<ResponseBody>() {
+        RegisterRequest registerRequest = new RegisterRequest(usernameET.getText().toString(),
+                                                              passwordET.getText().toString(),
+                                                              emailET.getText().toString());
+        IApiService apiService;
+        apiService = ApiClient.getApiClient().create(IApiService.class);
+        Call<RegisterResponse> call = apiService.registerUser(registerRequest);
+        call.enqueue(new Callback<RegisterResponse>() {
 
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                String s = "";
-                try {
-                    s = response.body().string();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                if (s.equals("SUCCESS")) {
-                    Toast.makeText(RegisterActivity.this, "Your registration was successful", Toast.LENGTH_SHORT).show();
+            public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
+                if (response.isSuccessful()) {
+                    String username = usernameET.getText().toString();
+                    Toast.makeText(RegisterActivity.this, "Hi " + username + "!", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                    intent.putExtra("username", username);
                     startActivity(intent);
-                } else {
-                    Toast.makeText(RegisterActivity.this, "User already exists!", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(RegisterActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<RegisterResponse> call, Throwable t) {
+                Toast.makeText(RegisterActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

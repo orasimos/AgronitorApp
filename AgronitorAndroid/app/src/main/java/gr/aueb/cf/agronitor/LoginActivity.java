@@ -5,20 +5,19 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 
 
-import java.io.IOException;
-
-import javax.net.ssl.SSLHandshakeException;
+import java.util.Objects;
 
 import gr.aueb.cf.agronitor.apiclient.ApiClient;
-import gr.aueb.cf.agronitor.models.User;
-import okhttp3.ResponseBody;
+import gr.aueb.cf.agronitor.apiclient.IApiService;
+import gr.aueb.cf.agronitor.apiclient.login.LoginRequest;
+import gr.aueb.cf.agronitor.apiclient.login.LoginResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,12 +42,21 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn = findViewById(R.id.loginBtn);
         registerBtn = findViewById(R.id.registerBtn);
 
-//        connectMongo(uri);
-
-//        TODO: make api call to get user from mongodb
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String username = Objects.requireNonNull(usernameET.getText()).toString().trim();
+                String password = Objects.requireNonNull(passwordET.getText()).toString().trim();
+
+                if (username.isEmpty()) {
+                    usernameET.setError("Username is required");
+                    usernameET.requestFocus();
+                    return;
+                } else if (password.isEmpty()){
+                    passwordET.setError("Password is required");
+                    passwordET.requestFocus();
+                    return;
+                }
                 loginUser();
             }
         });
@@ -63,40 +71,28 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginUser() {
-        final String username = usernameET.getText().toString().trim();
-        String password = passwordET.getText().toString().trim();
+        LoginRequest loginRequest = new LoginRequest(usernameET.getText().toString(), passwordET.getText().toString());
+        IApiService apiService;
+        apiService = ApiClient.getApiClient().create(IApiService.class);
+        Call<LoginResponse> call = apiService.loginUser(loginRequest);
+        call.enqueue(new Callback<LoginResponse>() {
 
-        if (username.isEmpty()) {
-            usernameET.setError("Username is required");
-            usernameET.requestFocus();
-            return;
-        } else if (password.isEmpty()){
-            passwordET.setError("Password is required");
-            passwordET.requestFocus();
-            return;
-        }
-
-        Call<ResponseBody> call = ApiClient.getInstance().getApi().loginUser(new User(username, password));
-
-        call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                String s = "";
-                s = response.headers().toString();
-
-                if (s.equals("success")) {
-                    Toast.makeText(LoginActivity.this, "Welcome back " + username + "!", Toast.LENGTH_SHORT).show();
-                }
-
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                if (usernameET.getText().toString().trim().equals("admin") && passwordET.getText().toString().trim().equals("admin")) {
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                if(response.isSuccessful()) {
+                    String username = usernameET.getText().toString();
+                    Toast.makeText(LoginActivity.this, "Welcome back " + username, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    intent.putExtra("userId", response.body().getId());
                     startActivity(intent);
+                } else {
+                    Toast.makeText(LoginActivity.this, "Username or password is wrong", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(LoginActivity.this, "Wrong username or password", Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                Toast.makeText(LoginActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -10,8 +10,8 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    @Query("SELECT count(*) > 0 FROM User U WHERE U.username = ?1 AND U.password = ?2")
-    boolean isUserValid(String username, String password);
+    @Query("SELECT U FROM User U WHERE U.username = ?1 AND U.password = ?2")
+    User isUserValid(String username, String password);
 
     @Query("SELECT count(*) > 0 FROM User U WHERE U.username = ?1")
     boolean usernameExists(String username);

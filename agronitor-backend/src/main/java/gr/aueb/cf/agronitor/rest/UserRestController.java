@@ -1,5 +1,7 @@
 package gr.aueb.cf.agronitor.rest;
 
+import gr.aueb.cf.agronitor.dto.LoggedInUserDTO;
+import gr.aueb.cf.agronitor.dto.LoginDTO;
 import gr.aueb.cf.agronitor.dto.TeacherDTO;
 import gr.aueb.cf.agronitor.dto.UserDTO;
 import gr.aueb.cf.agronitor.model.User;
@@ -105,7 +107,7 @@ public class UserRestController {
                             schema = @Schema(implementation = UserDTO.class)) }),
             @ApiResponse(responseCode = "400", description = "Invalid input was supplied",
                     content = @Content)})
-    @RequestMapping(value = "/users", method = RequestMethod.POST)
+    @RequestMapping(value = "/users/register", method = RequestMethod.POST)
     public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO dto, BindingResult bindingResult) {
         userValidator.validate(dto, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -123,6 +125,47 @@ public class UserRestController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+//    @Operation(summary = "Login user")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "User logged in successfully",
+//                    content = { @Content(mediaType = "application/json",
+//                            schema = @Schema(implementation = UserDTO.class)) }),
+//            @ApiResponse(responseCode = "400", description = "Invalid input was supplied",
+//                    content = @Content)})
+//    @RequestMapping(value = "/users/login", method = RequestMethod.POST)
+//    public ResponseEntity<LoggedInUserDTO> loginUser(@RequestParam String username, @RequestParam String password) {
+//        try {
+//            User user = userService.userIsValid(username, password);
+//            LoggedInUserDTO loggedInUserDTO = mapLoggedInUserDTO(user);
+//            return new ResponseEntity<>(loggedInUserDTO, HttpStatus.OK);
+//        } catch (EntityNotFoundException e) {
+//            LoggerUtil.getCurrentLogger().warning(e.getMessage());
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//
+//    }
+
+    @Operation(summary = "Login user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User logged in successfully",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = UserDTO.class)) }),
+            @ApiResponse(responseCode = "400", description = "Invalid input was supplied",
+                    content = @Content)})
+    @RequestMapping(value = "/users/login", method = RequestMethod.POST)
+    public ResponseEntity<LoggedInUserDTO> loginUser(@RequestBody LoginDTO loginDTO) {
+        try {
+            User user = userService.userIsValid(loginDTO.getUsername(), loginDTO.getPassword());
+            LoggedInUserDTO loggedInUserDTO = mapLoggedInUserDTO(user);
+            return new ResponseEntity<>(loggedInUserDTO, HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
+            LoggerUtil.getCurrentLogger().warning(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
 
     @Operation(summary = "Delete a user by id")
     @ApiResponses(value = {
@@ -181,5 +224,12 @@ public class UserRestController {
         userDTO.setEmail(user.getEmail());
         userDTO.setPassword(user.getPassword());
         return userDTO;
+    }
+
+    private LoggedInUserDTO mapLoggedInUserDTO(User user) {
+        LoggedInUserDTO loggedInUserDTO = new LoggedInUserDTO();
+        loggedInUserDTO.setId(user.getId());
+        loggedInUserDTO.setUsername(user.getUsername());
+        return loggedInUserDTO;
     }
 }

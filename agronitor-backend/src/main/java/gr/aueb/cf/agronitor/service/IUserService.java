@@ -1,5 +1,6 @@
 package gr.aueb.cf.agronitor.service;
 
+import gr.aueb.cf.agronitor.dto.LoggedInUserDTO;
 import gr.aueb.cf.agronitor.dto.UserDTO;
 import gr.aueb.cf.agronitor.model.User;
 import gr.aueb.cf.agronitor.service.exceptions.EntityNotFoundException;
@@ -14,4 +15,5 @@ public interface IUserService {
     List<User> getUsersByUsername(String username) throws EntityNotFoundException;
     User getUserById(Long id) throws EntityNotFoundException;
     boolean usernameAlreadyExists(String username) throws EntityAlreadyExistsException;
+    User userIsValid(String username, String password) throws EntityNotFoundException;
 }

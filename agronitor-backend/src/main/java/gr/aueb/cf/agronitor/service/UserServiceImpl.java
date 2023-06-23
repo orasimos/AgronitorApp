@@ -1,5 +1,6 @@
 package gr.aueb.cf.agronitor.service;
 
+import gr.aueb.cf.agronitor.dto.LoggedInUserDTO;
 import gr.aueb.cf.agronitor.dto.UserDTO;
 import gr.aueb.cf.agronitor.model.User;
 import gr.aueb.cf.agronitor.repository.UserRepository;
@@ -62,6 +63,13 @@ public class UserServiceImpl implements IUserService {
         return false;
     }
 
+    @Override
+    public User userIsValid(String username, String password) throws EntityNotFoundException{
+        User user = userRepository.isUserValid(username, password);
+        if (user == null) throw new EntityNotFoundException(User.class, 0L);
+        return user;
+    }
+
     //    Private Methods
     private User convertToNewUser(UserDTO dto) {
         return new User(dto.getUsername(), dto.getEmail(), dto.getPassword());
@@ -71,4 +79,7 @@ public class UserServiceImpl implements IUserService {
         return new User(dto.getId(), dto.getUsername(), dto.getEmail(), dto.getPassword()/*, dto.getGreenhouses()*/);
     }
 
+    private LoggedInUserDTO convertToLoggedInUser(User user) {
+        return new LoggedInUserDTO(user.getId(), user.getUsername());
+    }
 }
