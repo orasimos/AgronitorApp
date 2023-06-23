@@ -1,6 +1,7 @@
 package gr.aueb.cf.agronitor.rest;
 
 import gr.aueb.cf.agronitor.dto.GreenhouseDTO;
+import gr.aueb.cf.agronitor.dto.GreenhouseNoUserDTO;
 import gr.aueb.cf.agronitor.model.Greenhouse;
 import gr.aueb.cf.agronitor.model.User;
 import gr.aueb.cf.agronitor.service.IGreenhouseService;
@@ -111,13 +112,13 @@ public class GreenhouseRestController {
             @ApiResponse(responseCode = "404", description = "No greenhouses belong to this user",
                     content = @Content)})
     @RequestMapping(path = "/greenhouses/user/{userId}")
-    public ResponseEntity<List<GreenhouseDTO>> findGreenhousesByUserId(@PathVariable("userId") Long userId) {
+    public ResponseEntity<List<GreenhouseNoUserDTO>> findGreenhousesByUserId(@PathVariable("userId") Long userId) {
         List<Greenhouse> greenhouses;
         try {
             greenhouses = greenhouseService.getGreenhouseByUserId(userId);
-            List<GreenhouseDTO> greenhouseDTOs = new ArrayList<>();
+            List<GreenhouseNoUserDTO> greenhouseDTOs = new ArrayList<>();
             for (Greenhouse greenhouse : greenhouses) {
-                greenhouseDTOs.add(new GreenhouseDTO(greenhouse.getId(),
+                greenhouseDTOs.add(new GreenhouseNoUserDTO(greenhouse.getId(),
                                                      greenhouse.getGreenhouseName(),
                                                      greenhouse.getUser().getId()));
             }
@@ -190,13 +191,7 @@ public class GreenhouseRestController {
                             content = @Content) })
     @RequestMapping(value = "/greenhouses/{greenhouseId}", method = RequestMethod.PUT)
     public ResponseEntity<GreenhouseDTO> updateGreenhouse(@PathVariable("greenhouseId") Long greenhouseId,
-                                                          @RequestParam String greenhouseNewName/*,
-                                                          BindingResult bindingResult*/) {
-//        greenhouseValidator.validate(greenhouseNewName, bindingResult);
-//        if (bindingResult.hasErrors()) {
-//            LoggerUtil.getCurrentLogger().warning(accessor.getMessage("empty"));
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
+                                                          @RequestParam String greenhouseNewName) {
         if (greenhouseNewName.equals("")) {
             LoggerUtil.getCurrentLogger().warning(accessor.getMessage("empty"));
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -217,7 +212,6 @@ public class GreenhouseRestController {
         GreenhouseDTO greenhouseDTO = new GreenhouseDTO();
         greenhouseDTO.setId(greenhouse.getId());
         greenhouseDTO.setGreenhouseName(greenhouse.getGreenhouseName());
-//        greenhouseDTO.setUser(greenhouse.getUser());
         greenhouseDTO.setUserId(greenhouse.getUser().getId());
         return greenhouseDTO;
     }
@@ -227,5 +221,13 @@ public class GreenhouseRestController {
         greenhouse.setGreenhouseName(dto.getGreenhouseName());
         greenhouse.setUser(dto.getUser());
         return greenhouse;
+    }
+
+    private GreenhouseNoUserDTO mapNoUser(Greenhouse greenhouse) {
+        GreenhouseNoUserDTO greenhouseNoUserDTO = new GreenhouseNoUserDTO();
+        greenhouseNoUserDTO.setId(greenhouse.getId());
+        greenhouseNoUserDTO.setGreenhouseName(greenhouse.getGreenhouseName());
+        greenhouseNoUserDTO.setUserId(greenhouse.getUser().getId());
+        return greenhouseNoUserDTO;
     }
 }

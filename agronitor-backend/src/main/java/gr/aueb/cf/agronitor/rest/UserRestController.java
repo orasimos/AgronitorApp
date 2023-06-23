@@ -126,26 +126,6 @@ public class UserRestController {
         }
     }
 
-//    @Operation(summary = "Login user")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200", description = "User logged in successfully",
-//                    content = { @Content(mediaType = "application/json",
-//                            schema = @Schema(implementation = UserDTO.class)) }),
-//            @ApiResponse(responseCode = "400", description = "Invalid input was supplied",
-//                    content = @Content)})
-//    @RequestMapping(value = "/users/login", method = RequestMethod.POST)
-//    public ResponseEntity<LoggedInUserDTO> loginUser(@RequestParam String username, @RequestParam String password) {
-//        try {
-//            User user = userService.userIsValid(username, password);
-//            LoggedInUserDTO loggedInUserDTO = mapLoggedInUserDTO(user);
-//            return new ResponseEntity<>(loggedInUserDTO, HttpStatus.OK);
-//        } catch (EntityNotFoundException e) {
-//            LoggerUtil.getCurrentLogger().warning(e.getMessage());
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//
-//    }
-
     @Operation(summary = "Login user")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User logged in successfully",
@@ -165,8 +145,7 @@ public class UserRestController {
         }
 
     }
-
-
+    
     @Operation(summary = "Delete a user by id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User Deleted",

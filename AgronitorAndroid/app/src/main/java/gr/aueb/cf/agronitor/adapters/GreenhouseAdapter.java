@@ -21,6 +21,7 @@ import com.google.android.material.card.MaterialCardView;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import gr.aueb.cf.agronitor.MainActivity;
 import gr.aueb.cf.agronitor.ManagementActivity;

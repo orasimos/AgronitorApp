@@ -1,24 +1,37 @@
 package gr.aueb.cf.agronitor.apiclient.greenhouses;
 
-import java.util.List;
-
-import gr.aueb.cf.agronitor.models.Greenhouse;
-
 public class GreenhouseResponse {
-    List<Greenhouse> greenhouseList;
+    private String id;
+    private String greenhouseName;
+    private String userId;
 
-    public GreenhouseResponse(List<Greenhouse> greenhouseList) {
-        this.greenhouseList = greenhouseList;
+    public GreenhouseResponse(String id, String greenhouseName, String userId) {
+        this.id = id;
+        this.greenhouseName = greenhouseName;
+        this.userId = userId;
     }
 
-//    public GreenhouseResponse() {
-//    }
-
-    public List<Greenhouse> getGreenhouseList() {
-        return greenhouseList;
+    public String getId() {
+        return id;
     }
 
-    public void setGreenhouseList(List<Greenhouse> greenhouseList) {
-        this.greenhouseList = greenhouseList;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getGreenhouseName() {
+        return greenhouseName;
+    }
+
+    public void setGreenhouseName(String greenhouseName) {
+        this.greenhouseName = greenhouseName;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

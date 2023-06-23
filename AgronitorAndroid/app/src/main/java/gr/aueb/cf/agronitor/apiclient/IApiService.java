@@ -1,6 +1,6 @@
 package gr.aueb.cf.agronitor.apiclient;
 
-import gr.aueb.cf.agronitor.apiclient.greenhouses.GreenhouseResponse;
+import gr.aueb.cf.agronitor.apiclient.greenhouses.GreenhouseResponseList;
 import gr.aueb.cf.agronitor.apiclient.login.LoginRequest;
 import gr.aueb.cf.agronitor.apiclient.login.LoginResponse;
 import gr.aueb.cf.agronitor.apiclient.register.RegisterRequest;
@@ -20,5 +20,5 @@ public interface IApiService {
     Call<LoginResponse> loginUser(@Body LoginRequest loginRequest);
 
     @GET("greenhouses/user/{userId}")
-    Call<GreenhouseResponse> getGreenhouses(@Path("userId") String userId);
+    Call<GreenhouseResponseList> getGreenhouses(@Path("userId") String userId);
 }

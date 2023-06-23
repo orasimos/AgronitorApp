@@ -83,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
                     String username = usernameET.getText().toString();
                     Toast.makeText(LoginActivity.this, "Welcome back " + username, Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    intent.putExtra("userId", response.body().getId());
+                    intent.putExtra("userId", response.body().getId().toString());
                     startActivity(intent);
                 } else {
                     Toast.makeText(LoginActivity.this, "Username or password is wrong", Toast.LENGTH_SHORT).show();
