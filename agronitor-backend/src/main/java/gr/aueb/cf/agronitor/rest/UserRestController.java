@@ -2,7 +2,6 @@ package gr.aueb.cf.agronitor.rest;
 
 import gr.aueb.cf.agronitor.dto.LoggedInUserDTO;
 import gr.aueb.cf.agronitor.dto.LoginDTO;
-import gr.aueb.cf.agronitor.dto.TeacherDTO;
 import gr.aueb.cf.agronitor.dto.UserDTO;
 import gr.aueb.cf.agronitor.model.User;
 import gr.aueb.cf.agronitor.service.IUserService;
@@ -81,7 +80,7 @@ public class UserRestController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User found",
                     content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = TeacherDTO.class)) }),
+                            schema = @Schema(implementation = UserDTO.class)) }),
             @ApiResponse(responseCode = "404", description = "User not found",
                     content = @Content)})
     @RequestMapping(value = "/users/{userId}", method = RequestMethod.GET)

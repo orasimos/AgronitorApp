@@ -14,3 +14,5 @@ Jun 23, 2023 3:28:15 PM gr.aueb.cf.agronitor.rest.UserRestController loginUser
 WARNING: Entity User with id 0 does not exist
 Jun 23, 2023 3:37:14 PM gr.aueb.cf.agronitor.rest.UserRestController loginUser
 WARNING: Entity User with id 0 does not exist
+Jun 25, 2023 9:37:50 PM gr.aueb.cf.agronitor.rest.UserRestController getUsersByUsername
+WARNING: Entity User with id 0 does not exist
