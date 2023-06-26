@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -34,10 +35,10 @@ public class TemperatureServiceImpl implements ITemperatureService{
 
     @Override
     public Temperature getTemperatureById(Long id) throws EntityNotFoundException {
-        Optional<Temperature> temperature;
-        temperature = Optional.ofNullable(temperatureRepository.findTemperatureById(id));
-        if (temperature.isEmpty()) throw new EntityNotFoundException(Temperature.class, 0L);
-        return temperature.get();
+        Temperature temperature;
+        temperature = temperatureRepository.findTemperatureById(id);
+        if (temperature == null) throw new EntityNotFoundException(Temperature.class, 0L);
+        return temperature;
     }
 
 //    @Override
@@ -62,16 +63,9 @@ public class TemperatureServiceImpl implements ITemperatureService{
     }
 
     @Override
-    public Temperature getGreenhouseLastTemp(Long greenhouseId) throws EntityNotFoundException {
-        Temperature temperature = temperatureRepository.findLastTemperature(greenhouseId);
-        if (temperature == null) throw new EntityNotFoundException(Temperature.class, 0L);
-        return temperature;
-    }
-
-
-    //    Private methods
-    private Temperature convertToNewTemperature(TemperatureDTO temperatureDTO) {
-        return new Temperature(temperatureDTO.getTimestamp(), temperatureDTO.getValue(),
-                                                                                    temperatureDTO.getGreenhouse());
+    public List<Temperature> getGreenhouseLastTemp(Long greenhouseId) throws EntityNotFoundException {
+        List<Temperature> temperatures = temperatureRepository.findLastTemperature(greenhouseId);
+        if (temperatures.isEmpty()) throw new EntityNotFoundException(Temperature.class, 0L);
+        return temperatures;
     }
 }

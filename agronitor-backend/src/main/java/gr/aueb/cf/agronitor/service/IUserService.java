@@ -1,6 +1,5 @@
 package gr.aueb.cf.agronitor.service;
 
-import gr.aueb.cf.agronitor.dto.LoggedInUserDTO;
 import gr.aueb.cf.agronitor.dto.UserDTO;
 import gr.aueb.cf.agronitor.model.User;
 import gr.aueb.cf.agronitor.service.exceptions.EntityNotFoundException;

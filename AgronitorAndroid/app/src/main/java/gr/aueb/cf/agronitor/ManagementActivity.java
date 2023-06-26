@@ -14,7 +14,7 @@ import gr.aueb.cf.agronitor.fragments.StatsFragment;
 
 public class ManagementActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 
-    NavigationBarView bottomNavView;
+    private NavigationBarView bottomNavView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +24,9 @@ public class ManagementActivity extends AppCompatActivity implements NavigationB
         bottomNavView = findViewById(R.id.bottomNavView);
         bottomNavView.setOnItemSelectedListener(this);
         bottomNavView.setSelectedItemId(R.id.stats);
+
+        String greenhouseId = getIntent().getStringExtra("greenhouseId");
+        getMeasurements(greenhouseId);
     }
 
     StatsFragment statsFragment = new StatsFragment();
@@ -51,5 +54,9 @@ public class ManagementActivity extends AppCompatActivity implements NavigationB
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
         super.onPointerCaptureChanged(hasCapture);
+    }
+
+    private void getMeasurements(String greenhouseId) {
+
     }
 }

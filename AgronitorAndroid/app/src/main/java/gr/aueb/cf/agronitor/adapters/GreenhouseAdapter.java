@@ -31,17 +31,23 @@ import gr.aueb.cf.agronitor.models.Greenhouse;
 public class GreenhouseAdapter extends RecyclerView.Adapter<GreenhouseAdapter.MyViewHolder> {
 
     private final Context context;
-    private final ArrayList<Greenhouse> greenhouseArrayList;
+    private ArrayList<Greenhouse> greenhouseArrayList;
 
     public GreenhouseAdapter(Context context, ArrayList<Greenhouse> greenhouseArrayList) {
         this.context = context;
         this.greenhouseArrayList = greenhouseArrayList;
     }
 
+    public void setGreenhouseArrayList(ArrayList<Greenhouse> greenhouseArrayList) {
+        this.greenhouseArrayList = greenhouseArrayList;
+    }
+
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.greenhouse_card_layout, parent, false);
+        View view = LayoutInflater
+                .from(parent.getContext())
+                .inflate(R.layout.greenhouse_card_layout, parent, false);
         return new MyViewHolder(view);
     }
 
@@ -52,8 +58,11 @@ public class GreenhouseAdapter extends RecyclerView.Adapter<GreenhouseAdapter.My
         holder.greenhouseCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), holder.greenhouseNameTV.getText().toString(), Toast.LENGTH_SHORT).show();
-                context.startActivity(new Intent(context, ManagementActivity.class));
+                Toast.makeText(v.getContext(),
+                        holder.greenhouseNameTV.getText().toString(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, ManagementActivity.class);
+                intent.putExtra("greenhouseId", greenhouse.getId());
+                context.startActivity(intent);
             }
         });
     }
@@ -74,8 +83,8 @@ public class GreenhouseAdapter extends RecyclerView.Adapter<GreenhouseAdapter.My
             super(itemView);
             this.greenhouseNameTV = itemView.findViewById(R.id.greenhouseNameTV);
             this.greenhouseCardView = itemView.findViewById(R.id.greenhouseCardView);
-            this.popupCardBtn = itemView.findViewById(R.id.popupCardBtn);
 
+            this.popupCardBtn = itemView.findViewById(R.id.popupCardBtn);
             this.popupCardBtn.setOnClickListener(this);
         }
 
@@ -93,7 +102,7 @@ public class GreenhouseAdapter extends RecyclerView.Adapter<GreenhouseAdapter.My
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-//                                TODO: api call to remove greenhouse from mongoDB.
+//                                TODO: api call to remove greenhouse
                             }
                         })
                         .setNegativeButton("No", null)

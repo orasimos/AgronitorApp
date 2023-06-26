@@ -20,7 +20,8 @@ import java.util.List;
 import gr.aueb.cf.agronitor.adapters.GreenhouseAdapter;
 import gr.aueb.cf.agronitor.apiclient.ApiClient;
 import gr.aueb.cf.agronitor.apiclient.IApiService;
-import gr.aueb.cf.agronitor.apiclient.greenhouses.GreenhouseResponseList;
+import gr.aueb.cf.agronitor.apiclient.greenhouses.AddGreenhouseRequest;
+import gr.aueb.cf.agronitor.apiclient.greenhouses.AddGreenhouseResponse;
 import gr.aueb.cf.agronitor.models.Greenhouse;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView greenhousesRV;
     private FloatingActionButton addGreenhouse;
-//    private String newGreenhouseName = "";
-    private ArrayList<Greenhouse> greenhouses;
+    private String newGreenhouseName = "";
+    private ArrayList<Greenhouse> greenhouseList = new ArrayList<>();
     private GreenhouseAdapter greenhouseAdapter;
     private LinearLayoutManager linearLayoutManager;
 
@@ -43,8 +44,7 @@ public class MainActivity extends AppCompatActivity {
         greenhousesRV = findViewById(R.id.greenhousesRV);
         addGreenhouse = findViewById(R.id.addGreenhouse);
         String userId = getIntent().getStringExtra("userId");
-        greenhouses = new ArrayList<>();
-        ArrayList<Greenhouse> greenhouseList = getGreenhouses(userId);
+        getGreenhouses(userId);
 
 
         greenhouseAdapter = new GreenhouseAdapter(this, greenhouseList);
@@ -54,20 +54,22 @@ public class MainActivity extends AppCompatActivity {
         greenhousesRV.setAdapter(greenhouseAdapter);
 
         addGreenhouse.setOnClickListener(new View.OnClickListener() {
-//            TODO: Add new greenhouse
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 final EditText input = new EditText(MainActivity.this);
 
                 input.setInputType(InputType.TYPE_CLASS_TEXT);
-
                 builder.setTitle("Name your new greenhouse")
                         .setView(input)
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-//                                newGreenhouseName = input.getText().toString();
+                                newGreenhouseName = input.getText().toString();
+                                if (!newGreenhouseName.equals("")) {
+                                    AddGreenhouseRequest addGreenhouseRequest = new AddGreenhouseRequest(newGreenhouseName);
+                                    addNewGreenhouse(userId, addGreenhouseRequest);
+                                }
                             }
                         })
                         .setNegativeButton("Cancel", null)
@@ -76,31 +78,55 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private ArrayList<Greenhouse> getGreenhouses(String userId) {
-        IApiService apiService;
-        apiService = ApiClient.getApiClient().create(IApiService.class);
-        Call<GreenhouseResponseList> call = apiService.getGreenhouses(userId);
-        call.enqueue(new Callback<GreenhouseResponseList>() {
-
+    private void getGreenhouses(String userId) {
+        IApiService apiService = ApiClient.getApiClient().create(IApiService.class);
+        Call<List<Greenhouse>> call = apiService.getGreenhouses(userId);
+        call.enqueue(new Callback<List<Greenhouse>>() {
             @Override
-            public void onResponse(Call<GreenhouseResponseList> call, Response<GreenhouseResponseList> response) {
-               if (response.isSuccessful()) {
-                   GreenhouseResponseList greenhouseResponseList = response.body();
-                   if (greenhouseResponseList != null) {
-                       greenhouses.addAll(greenhouseResponseList.getGreenhouseList());
-//                       greenhouseAdapter.notifyDataSetChanged();
-                   } else {
-                       Toast.makeText(MainActivity.this, "No greenhouses found", Toast.LENGTH_SHORT).show();
-                   }
-               }
+            public void onResponse(Call<List<Greenhouse>> call, Response<List<Greenhouse>> response) {
+                if (response.isSuccessful()) {
+                    List<Greenhouse> greenhouses = response.body();
+                    if (greenhouses != null) {
+                        ArrayList<Greenhouse> greenhouseArrayList = new ArrayList<>(greenhouses);
+                        updateUi(greenhouseArrayList);
+                    } else {
+                        Toast.makeText(MainActivity.this, "No greenhouses found", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
             }
 
             @Override
-            public void onFailure(Call<GreenhouseResponseList> call, Throwable t) {
+            public void onFailure(Call<List<Greenhouse>> call, Throwable t) {
                 Toast.makeText(MainActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-        return greenhouses;
+    }
+
+    private void addNewGreenhouse(String userId, AddGreenhouseRequest addGreenhouseRequest) {
+        IApiService apiService = ApiClient.getApiClient().create(IApiService.class);
+        Call<AddGreenhouseResponse> call = apiService.addGreenhouse(userId, addGreenhouseRequest);
+        call.enqueue(new Callback<AddGreenhouseResponse>() {
+            @Override
+            public void onResponse(Call<AddGreenhouseResponse> call, Response<AddGreenhouseResponse> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(MainActivity.this, "New greenhouse added", Toast.LENGTH_SHORT).show();
+                    getGreenhouses(userId);
+                } else {
+                    Toast.makeText(MainActivity.this, "Greenhouse was Not added", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AddGreenhouseResponse> call, Throwable t) {
+                Toast.makeText(MainActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void updateUi(ArrayList<Greenhouse> greenhouseArrayList) {
+        greenhouseAdapter.setGreenhouseArrayList(greenhouseArrayList);
+        greenhouseAdapter.notifyDataSetChanged();
     }
 
     @Override

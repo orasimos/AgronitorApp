@@ -16,17 +16,41 @@ public class TemperatureDTO {
     private Long greenhouseId;
     private Greenhouse greenhouse;
 
-    public TemperatureDTO(Long id, Date timestamp, String value, Greenhouse greenhouse) {
-        this.id = id;
-        this.timestamp = timestamp;
-        this.value = value;
-        this.greenhouse = greenhouse;
-    }
-
     public TemperatureDTO(Long id, Date timestamp, String value, Long greenhouseId) {
         this.id = id;
         this.timestamp = timestamp;
         this.value = value;
+        this.greenhouseId = greenhouseId;
+    }
+
+    public TemperatureDTO(Date timestamp, String value, Long greenhouseId) {
+        this.timestamp = timestamp;
+        this.value = value;
+        this.greenhouseId = greenhouseId;
+    }
+
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public Date getTimestamp() {
+        return timestamp;
+    }
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
+    }
+    public String getValue() {
+        return value;
+    }
+    public void setValue(String value) {
+        this.value = value;
+    }
+    public Long getGreenhouseId() {
+        return greenhouseId;
+    }
+    public void setGreenhouseId(Long greenhouseId) {
         this.greenhouseId = greenhouseId;
     }
 }

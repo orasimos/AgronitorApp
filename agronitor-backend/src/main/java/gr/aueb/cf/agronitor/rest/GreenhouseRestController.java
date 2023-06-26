@@ -137,11 +137,11 @@ public class GreenhouseRestController {
             @ApiResponse(responseCode = "400", description = "Invalid input was supplied",
                             content = @Content)})
     @RequestMapping(value = "/greenhouses/user/{userId}", method = RequestMethod.POST)
-    public ResponseEntity<GreenhouseDTO> addGreenhouse(@PathVariable("userId") Long userId,
+    public ResponseEntity<GreenhouseNoUserDTO> addGreenhouse(@PathVariable("userId") Long userId,
                                                        @RequestBody GreenhouseDTO dto, BindingResult bindingResult) {
         greenhouseValidator.validate(dto, bindingResult);
         if (bindingResult.hasErrors()) {
-            LoggerUtil.getCurrentLogger().warning(accessor.getMessage("empty"));
+            LoggerUtil.getCurrentLogger().warning(accessor.getMessage("invalid input"));
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         try {
@@ -150,10 +150,10 @@ public class GreenhouseRestController {
             greenhouse.setGreenhouseName(dto.getGreenhouseName());
             greenhouse.setUser(user);
             Greenhouse savedGreenhouse = greenhouseService.insertGreenhouse(greenhouse);
-            GreenhouseDTO greenhouseDTO = map(savedGreenhouse);
+            GreenhouseNoUserDTO greenhouseNoUserDTO = mapNoUser(savedGreenhouse);
             URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                    .path("{id}").buildAndExpand(greenhouseDTO.getId()).toUri();
-            return ResponseEntity.created(location).body(greenhouseDTO);
+                    .path("{id}").buildAndExpand(greenhouseNoUserDTO.getId()).toUri();
+            return ResponseEntity.created(location).body(greenhouseNoUserDTO);
         } catch (EntityNotFoundException e) {
             LoggerUtil.getCurrentLogger().warning(e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

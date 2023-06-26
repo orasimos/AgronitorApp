@@ -24,10 +24,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.annotation.PostConstruct;
 import java.net.URI;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api/greenhouses/measurements")
@@ -93,13 +91,11 @@ public class TemperatureRestController {
         }
         try {
             Greenhouse greenhouse = greenhouseService.getGreenhouseById(greenhouseId);
-            Temperature temperature = new Temperature();
-            temperature.setTimestamp(dto.getTimestamp());
-            temperature.setValue(dto.getValue());
+            Temperature temperature = new Temperature(dto.getTimestamp(), dto.getValue(), greenhouseId);
             temperature.setGreenhouse(greenhouse);
             Temperature savedTemperature = temperatureService.insertTemperature(temperature);
             TemperatureDTO temperatureDTO = map(savedTemperature);
-            URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+            URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("{id}")
                     .buildAndExpand(temperatureDTO.getId()).toUri();
             return ResponseEntity.created(location).body(temperatureDTO);
         } catch (EntityNotFoundException e) {
@@ -109,25 +105,25 @@ public class TemperatureRestController {
 
     }
 
-    @Operation(summary = "Delete a temperature by id")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Temperature reading deleted successfully",
-            content = {@Content(mediaType = "application/json",
-            schema = @Schema(implementation = TemperatureDTO.class))}),
-            @ApiResponse(responseCode = "404", description = "Temperature reading not found",
-            content = @Content)})
-    @RequestMapping(value = "/temp/{tempId}", method = RequestMethod.DELETE)
-    public ResponseEntity<TemperatureDTO> deleteTemperature(@PathVariable("tempId") Long tempId) {
-        try {
-            Temperature temperature = temperatureService.getTemperatureById(tempId);
-            temperatureService.deleteTemperature(tempId);
-            TemperatureDTO temperatureDTO = map(temperature);
-            return new ResponseEntity<>(temperatureDTO, HttpStatus.OK);
-        } catch (EntityNotFoundException e) {
-            LoggerUtil.getCurrentLogger().warning(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+//    @Operation(summary = "Delete a temperature by id")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "Temperature reading deleted successfully",
+//            content = {@Content(mediaType = "application/json",
+//            schema = @Schema(implementation = TemperatureDTO.class))}),
+//            @ApiResponse(responseCode = "404", description = "Temperature reading not found",
+//            content = @Content)})
+//    @RequestMapping(value = "/temp/{tempId}", method = RequestMethod.DELETE)
+//    public ResponseEntity<TemperatureDTO> deleteTemperature(@PathVariable("tempId") Long tempId) {
+//        try {
+//            Temperature temperature = temperatureService.getTemperatureById(tempId);
+//            temperatureService.deleteTemperature(tempId);
+//            TemperatureDTO temperatureDTO = map(temperature);
+//            return new ResponseEntity<>(temperatureDTO, HttpStatus.OK);
+//        } catch (EntityNotFoundException e) {
+//            LoggerUtil.getCurrentLogger().warning(e.getMessage());
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//    }
 
 //    @Operation(summary = "Get greenhouse temperature reading by timestamp")
 //    @ApiResponses(value = {
@@ -186,9 +182,9 @@ public class TemperatureRestController {
         try {
             Temperature temperature = temperatureService.getMinTemperature(greenhouseId);
             TemperatureDTO temperatureDTO = new TemperatureDTO(temperature.getId(),
-                    temperature.getTimestamp(),
-                    temperature.getValue(),
-                    temperature.getGreenhouse().getId());
+                                                               temperature.getTimestamp(),
+                                                               temperature.getValue(),
+                                                               temperature.getGreenhouse().getId());
             return new ResponseEntity<>(temperatureDTO, HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             LoggerUtil.getCurrentLogger().warning(e.getMessage());
@@ -206,11 +202,12 @@ public class TemperatureRestController {
     @RequestMapping(value = "/temp/last/greenhouse/{greenhouseId}", method = RequestMethod.GET)
     public ResponseEntity<TemperatureDTO> getGreenhouseLastTemp(@PathVariable("greenhouseId") Long greenhouseId) {
         try {
-            Temperature temperature = temperatureService.getGreenhouseLastTemp(greenhouseId);
+            List<Temperature> temperatureList = temperatureService.getGreenhouseLastTemp(greenhouseId);
+            Temperature temperature = temperatureList.get(0);
             TemperatureDTO temperatureDTO = new TemperatureDTO(temperature.getId(),
-                    temperature.getTimestamp(),
-                    temperature.getValue(),
-                    temperature.getGreenhouse().getId());
+                                                               temperature.getTimestamp(),
+                                                               temperature.getValue(),
+                                                               temperature.getGreenhouse().getId());
             return new ResponseEntity<>(temperatureDTO, HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             LoggerUtil.getCurrentLogger().warning(e.getMessage());

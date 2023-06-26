@@ -28,6 +28,15 @@ public class Greenhouse {
     @OneToMany(mappedBy = "id")
     private List<Temperature> temperatureList;
 
+    @OneToMany(mappedBy = "id")
+    private List<Humidity> humidityList;
+
+    @OneToMany(mappedBy = "id")
+    private List<SoilHydration> soilHydrationList;
+
+    @OneToMany(mappedBy = "id")
+    private List<UVRadiation> uvRadiationList;
+
 //    Overloaded constructors
     public Greenhouse(Long id, String greenhouseName, User user) {
         this.id = id;

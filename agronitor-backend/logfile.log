@@ -14,3 +14,9 @@ Jun 23, 2023 3:28:15 PM gr.aueb.cf.agronitor.rest.UserRestController loginUser
 WARNING: Entity User with id 0 does not exist
 Jun 23, 2023 3:37:14 PM gr.aueb.cf.agronitor.rest.UserRestController loginUser
 WARNING: Entity User with id 0 does not exist
+Jun 26, 2023 10:46:14 AM gr.aueb.cf.agronitor.rest.GreenhouseRestController findGreenhousesByUserId
+WARNING: Entity Greenhouse with id 0 does not exist
+Jun 26, 2023 10:47:07 AM gr.aueb.cf.agronitor.rest.GreenhouseRestController findGreenhousesByUserId
+WARNING: Entity Greenhouse with id 0 does not exist
+Jun 26, 2023 10:50:00 AM gr.aueb.cf.agronitor.rest.GreenhouseRestController findGreenhousesByUserId
+WARNING: Entity Greenhouse with id 0 does not exist

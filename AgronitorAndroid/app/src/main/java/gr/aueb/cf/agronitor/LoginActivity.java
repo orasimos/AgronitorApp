@@ -29,9 +29,6 @@ public class LoginActivity extends AppCompatActivity {
     private AppCompatButton loginBtn;
     private AppCompatButton registerBtn;
 
-    String uri = "mongodb+srv://orasimos:HA9UPE.wEUD4XP!@cluster0.fhrtj0i.mongodb.net/" +
-            "?retryWrites=true&w=majority";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

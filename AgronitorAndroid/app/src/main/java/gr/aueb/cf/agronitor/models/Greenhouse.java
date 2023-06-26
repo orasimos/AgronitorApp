@@ -10,18 +10,17 @@ public class Greenhouse {
     private String greenhouseName;
     private Long userId;
 
+    //    Constructor
     public Greenhouse(String greenhouseName) {
         this.greenhouseName = greenhouseName;
     }
 
-//    Constructor
     public Greenhouse(String greenhouseName, Long userId) {
         this.greenhouseName = greenhouseName;
         this.userId = userId;
     }
 
 //    Getters and Setters
-
     public Long getId() {
         return id;
     }
