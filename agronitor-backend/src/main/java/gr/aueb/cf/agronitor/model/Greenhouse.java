@@ -2,6 +2,8 @@ package gr.aueb.cf.agronitor.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.List;
@@ -21,20 +23,20 @@ public class Greenhouse {
     @Column(name = "greenhouse_name", length = 50, nullable = false)
     private String greenhouseName;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "id_user", referencedColumnName = "id")
     private User user;
 
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "id", cascade = CascadeType.REMOVE)
     private List<Temperature> temperatureList;
 
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "id", cascade = CascadeType.REMOVE)
     private List<Humidity> humidityList;
 
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "id", cascade = CascadeType.REMOVE)
     private List<SoilHydration> soilHydrationList;
 
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "id", cascade = CascadeType.REMOVE)
     private List<UVRadiation> uvRadiationList;
 
 //    Overloaded constructors

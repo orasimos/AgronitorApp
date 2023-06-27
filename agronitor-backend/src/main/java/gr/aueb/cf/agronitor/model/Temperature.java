@@ -2,6 +2,8 @@ package gr.aueb.cf.agronitor.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -23,7 +25,7 @@ public class Temperature {
     @Column(name = "value")
     private String value;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "id_greenhouse", referencedColumnName = "id")
     private Greenhouse greenhouse;
 

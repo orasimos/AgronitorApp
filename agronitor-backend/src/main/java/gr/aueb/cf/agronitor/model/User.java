@@ -3,6 +3,8 @@ package gr.aueb.cf.agronitor.model;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -28,10 +30,7 @@ public class User {
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-//    @OneToMany(mappedBy = "user")
-//    private List<Greenhouse> greenhouses;
-
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "id", cascade = CascadeType.REMOVE)
     private List<Greenhouse> greenhouseList = new ArrayList<>();
 
 //   Overloaded Constructors

@@ -12,6 +12,6 @@ public interface IHumidityService {
 //    Humidity getGreenhouseHumidityByTimestamp(Date timestamp, Long greenhouseId) throws EntityNotFoundException;
     Humidity getMaxHumidity(Long greenhouseId) throws EntityNotFoundException;
     Humidity getMinHumidity(Long greenhouseId) throws EntityNotFoundException;
-    List<Humidity> getGreehouseLastHum(Long greenhouseId) throws EntityNotFoundException
+    List<Humidity> getGreehouseLastHum(Long greenhouseId) throws EntityNotFoundException;
 
 }

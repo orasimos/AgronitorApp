@@ -142,7 +142,6 @@ public class UserRestController {
             LoggerUtil.getCurrentLogger().warning(e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
     }
     
     @Operation(summary = "Delete a user by id")
