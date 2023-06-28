@@ -5,10 +5,9 @@ import gr.aueb.cf.agronitor.repository.HumidityRepository;
 import gr.aueb.cf.agronitor.service.exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class HumidityServiceImpl implements IHumidityService {
@@ -32,6 +31,7 @@ public class HumidityServiceImpl implements IHumidityService {
         humidityRepository.deleteById(id);
     }
 
+    @Transactional
     @Override
     public Humidity getHumidityById(Long id) throws EntityNotFoundException {
         Humidity humidity = humidityRepository.findHumidityById(id);
@@ -39,6 +39,7 @@ public class HumidityServiceImpl implements IHumidityService {
         return humidity;
     }
 
+    @Transactional
     @Override
     public Humidity getMaxHumidity(Long greenhouseId) throws EntityNotFoundException {
        Humidity humidity = humidityRepository.getMaxHumidity(greenhouseId);
@@ -46,6 +47,7 @@ public class HumidityServiceImpl implements IHumidityService {
        return humidity;
     }
 
+    @Transactional
     @Override
     public Humidity getMinHumidity(Long greenhouseId) throws EntityNotFoundException {
         Humidity humidity = humidityRepository.getMinHumidity(greenhouseId);
@@ -53,6 +55,7 @@ public class HumidityServiceImpl implements IHumidityService {
         return humidity;
     }
 
+    @Transactional
     @Override
     public List<Humidity> getGreehouseLastHum(Long greenhouseId) throws EntityNotFoundException {
         List<Humidity> humidities = humidityRepository.findLastHumidity(greenhouseId);

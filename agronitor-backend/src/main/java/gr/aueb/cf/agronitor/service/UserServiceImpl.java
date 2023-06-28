@@ -8,8 +8,8 @@ import gr.aueb.cf.agronitor.service.exceptions.EntityNotFoundException;
 import gr.aueb.cf.agronitor.service.exceptions.EntityAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -42,6 +42,7 @@ public class UserServiceImpl implements IUserService {
         userRepository.deleteById(id);
     }
 
+    @Transactional
     @Override
     public User getUserById(Long id) throws EntityNotFoundException {
         User user = userRepository.findUserById(id);
@@ -49,6 +50,7 @@ public class UserServiceImpl implements IUserService {
         return user;
     }
 
+    @Transactional
     @Override
     public List<User> getUsersByUsername(String username) throws EntityNotFoundException {
         List<User> users;
@@ -57,12 +59,14 @@ public class UserServiceImpl implements IUserService {
         return users;
     }
 
+    @Transactional
     @Override
     public boolean usernameAlreadyExists(String username) throws EntityAlreadyExistsException {
         if (userRepository.usernameExists(username)) throw new EntityAlreadyExistsException(User.class, username);
         return false;
     }
 
+    @Transactional
     @Override
     public User userIsValid(String username, String password) throws EntityNotFoundException{
         User user = userRepository.isUserValid(username, password);

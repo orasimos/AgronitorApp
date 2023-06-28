@@ -25,7 +25,7 @@ public class Humidity {
     @Column(name = "value")
     private String value;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_greenhouse", referencedColumnName = "id")
     private Greenhouse greenhouse;
 
@@ -35,6 +35,7 @@ public class Humidity {
 //        this.greenhouse = new Greenhouse();
 //        this.greenhouse.setId(greenhouseId);
         this.greenhouse.setId(greenhouseId);
+        this.greenhouse.addHumidity(this);
     }
 
     public Long getId() {

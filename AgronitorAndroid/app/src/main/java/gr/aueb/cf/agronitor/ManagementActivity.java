@@ -15,6 +15,18 @@ import gr.aueb.cf.agronitor.fragments.StatsFragment;
 public class ManagementActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 
     private NavigationBarView bottomNavView;
+    private String currentTemp;
+    private String currentHum;
+    private String currentHydr;
+    private String currentUV;
+    private String minTemp;
+    private String maxTemp;
+    private String minHum;
+    private String maxHum;
+    private String minHydr;
+    private String maxHydr;
+    private String minUV;
+    private String maxUV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

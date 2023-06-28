@@ -1,11 +1,8 @@
 package gr.aueb.cf.agronitor.rest;
 
-import gr.aueb.cf.agronitor.dto.TemperatureDTO;
 import gr.aueb.cf.agronitor.dto.UVRadiationDTO;
 import gr.aueb.cf.agronitor.model.Greenhouse;
-import gr.aueb.cf.agronitor.model.Temperature;
 import gr.aueb.cf.agronitor.model.UVRadiation;
-import gr.aueb.cf.agronitor.repository.UVRadiationRepository;
 import gr.aueb.cf.agronitor.service.IGreenhouseService;
 import gr.aueb.cf.agronitor.service.IUVRadiationService;
 import gr.aueb.cf.agronitor.service.exceptions.EntityNotFoundException;
@@ -96,6 +93,7 @@ public class UVRadiationRestController {
             Greenhouse greenhouse = greenhouseService.getGreenhouseById(greenhouseId);
             UVRadiation uvRadiation = new UVRadiation(dto.getTimestamp(), dto.getValue(), greenhouseId);
             uvRadiation.setGreenhouse(greenhouse);
+            greenhouse.addUVRadiation(uvRadiation);
             UVRadiation savedUVRadiation = uvRadiationService.insertUVRadiation(uvRadiation);
             UVRadiationDTO uvRadiationDTO = map(savedUVRadiation);
             URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("{id}")

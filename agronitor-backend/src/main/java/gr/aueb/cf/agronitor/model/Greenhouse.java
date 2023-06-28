@@ -23,20 +23,20 @@ public class Greenhouse {
     @Column(name = "greenhouse_name", length = 50, nullable = false)
     private String greenhouseName;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user", referencedColumnName = "id")
     private User user;
 
-    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "greenhouse", cascade = CascadeType.ALL)
     private List<Temperature> temperatureList;
 
-    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "greenhouse", cascade = CascadeType.ALL)
     private List<Humidity> humidityList;
 
-    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "greenhouse", cascade = CascadeType.ALL)
     private List<SoilHydration> soilHydrationList;
 
-    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "greenhouse", cascade = CascadeType.ALL)
     private List<UVRadiation> uvRadiationList;
 
 //    Overloaded constructors
@@ -60,12 +60,27 @@ public class Greenhouse {
     public Greenhouse(String greenhouseName, User user) {
         this.greenhouseName = greenhouseName;
         this.user = user;
-        user.getGreenhouseList().add(this);
+        this.user.addGreenhouse(this);
     }
 
 //    Convenient Method
     public void addTemperature(Temperature temperature) {
         this.temperatureList.add(temperature);
         temperature.setGreenhouse(this);
+    }
+
+    public void addHumidity(Humidity humidity) {
+        this.humidityList.add(humidity);
+        humidity.setGreenhouse(this);
+    }
+
+    public void addSoilHydration(SoilHydration soilHydration) {
+        this.soilHydrationList.add(soilHydration);
+        soilHydration.setGreenhouse(this);
+    }
+
+    public void addUVRadiation(UVRadiation uvRadiation) {
+        this.uvRadiationList.add(uvRadiation);
+        uvRadiation.setGreenhouse(this);
     }
 }

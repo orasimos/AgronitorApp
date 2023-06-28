@@ -1,10 +1,8 @@
 package gr.aueb.cf.agronitor.rest;
 
 import gr.aueb.cf.agronitor.dto.HumidityDTO;
-import gr.aueb.cf.agronitor.dto.TemperatureDTO;
 import gr.aueb.cf.agronitor.model.Greenhouse;
 import gr.aueb.cf.agronitor.model.Humidity;
-import gr.aueb.cf.agronitor.model.Temperature;
 import gr.aueb.cf.agronitor.service.IGreenhouseService;
 import gr.aueb.cf.agronitor.service.IHumidityService;
 import gr.aueb.cf.agronitor.service.exceptions.EntityNotFoundException;
@@ -20,6 +18,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -76,6 +75,7 @@ public class HumidityRestController {
         }
     }
 
+    @Transactional
     @Operation(summary = "Insert a new humidity reading")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Humidity reading successfully added",
@@ -95,6 +95,7 @@ public class HumidityRestController {
             Greenhouse greenhouse = greenhouseService.getGreenhouseById(greenhouseId);
             Humidity humidity = new Humidity(dto.getTimestamp(), dto.getValue(), greenhouseId);
             humidity.setGreenhouse(greenhouse);
+            greenhouse.addHumidity(humidity);
             Humidity savedHumidity = humidityService.insertHumidity(humidity);
             HumidityDTO humidityDTO = map(savedHumidity);
             URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("{id}")

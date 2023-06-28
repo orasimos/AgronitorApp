@@ -20,6 +20,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -149,6 +150,7 @@ public class GreenhouseRestController {
             Greenhouse greenhouse = new Greenhouse();
             greenhouse.setGreenhouseName(dto.getGreenhouseName());
             greenhouse.setUser(user);
+            user.addGreenhouse(greenhouse);
             Greenhouse savedGreenhouse = greenhouseService.insertGreenhouse(greenhouse);
             GreenhouseNoUserDTO greenhouseNoUserDTO = mapNoUser(savedGreenhouse);
             URI location = ServletUriComponentsBuilder.fromCurrentRequest()

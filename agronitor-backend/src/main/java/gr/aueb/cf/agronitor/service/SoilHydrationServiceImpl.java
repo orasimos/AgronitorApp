@@ -5,8 +5,8 @@ import gr.aueb.cf.agronitor.repository.SoilHydrationRepository;
 import gr.aueb.cf.agronitor.service.exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -31,6 +31,7 @@ public class SoilHydrationServiceImpl implements ISoilHydrationService {
         soilHydrationRepository.deleteById(id);
     }
 
+    @Transactional
     @Override
     public SoilHydration getSoilHydrationById(Long id) throws EntityNotFoundException {
         SoilHydration soilHydration;
@@ -39,6 +40,7 @@ public class SoilHydrationServiceImpl implements ISoilHydrationService {
         return soilHydration;
     }
 
+    @Transactional
     @Override
     public SoilHydration getMaxSoilHydration(Long greenhouseId) throws EntityNotFoundException {
         SoilHydration soilHydration = soilHydrationRepository.getMaxSoilHydration(greenhouseId);
@@ -46,6 +48,7 @@ public class SoilHydrationServiceImpl implements ISoilHydrationService {
         return soilHydration;
     }
 
+    @Transactional
     @Override
     public SoilHydration getMinSoilHydration(Long greenhouseId) throws EntityNotFoundException {
         SoilHydration soilHydration = soilHydrationRepository.getMinSoilHydration(greenhouseId);
@@ -53,6 +56,7 @@ public class SoilHydrationServiceImpl implements ISoilHydrationService {
         return soilHydration;
     }
 
+    @Transactional
     @Override
     public List<SoilHydration> getGreenhouseLastSoilHyd(Long greenhouseId) throws EntityNotFoundException {
         List<SoilHydration> soilHydrations = soilHydrationRepository.findLastSoilHydration(greenhouseId);

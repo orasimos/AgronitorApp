@@ -5,6 +5,7 @@ import gr.aueb.cf.agronitor.updater.MeasurementsUpdater;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class MeasurementsUpdaterService {
@@ -23,6 +24,7 @@ public class MeasurementsUpdaterService {
                                                            uvRadiationRepository);
     }
 
+    @Transactional
     @Scheduled(fixedRate = 1800000)
     public void updateMeasurements() {
         measurementsUpdater.updateGreenhouseMeasurements();

@@ -39,6 +39,7 @@ public class MeasurementsUpdater {
 //        scheduler.shutdown();
 //    }
 
+    @Transactional
     public void updateGreenhouseMeasurements() {
         List<Greenhouse> greenhouseList = greenhouseRepository.findAll();
 
@@ -52,26 +53,45 @@ public class MeasurementsUpdater {
             Temperature temperature = new Temperature();
             temperature.setValue(tempValue);
             temperature.setTimestamp(timeStamp);
-            temperature.setGreenhouse(greenhouse);
-            temperatureRepository.save(temperature);
+            greenhouse = greenhouseRepository.findGreenhouseById(greenhouse.getId());
+            if (greenhouse != null) {
+                temperature.setGreenhouse(greenhouse);
+                greenhouse.addTemperature(temperature);
+                temperatureRepository.save(temperature);
+            }
 
             Humidity humidity = new Humidity();
             humidity.setValue(humValue);
             humidity.setTimestamp(timeStamp);
             humidity.setGreenhouse(greenhouse);
-            humidityRepository.save(humidity);
+            greenhouse = greenhouseRepository.findGreenhouseById(greenhouse.getId());
+            if (greenhouse != null) {
+                humidity.setGreenhouse(greenhouse);
+                greenhouse.addHumidity(humidity);
+                humidityRepository.save(humidity);
+            }
 
             SoilHydration soilHydration = new SoilHydration();
             soilHydration.setValue(hydrValue);
             soilHydration.setTimestamp(timeStamp);
             soilHydration.setGreenhouse(greenhouse);
-            soilHydrationRepository.save(soilHydration);
+            greenhouse = greenhouseRepository.findGreenhouseById(greenhouse.getId());
+            if (greenhouse != null) {
+                soilHydration.setGreenhouse(greenhouse);
+                greenhouse.addSoilHydration(soilHydration);
+                soilHydrationRepository.save(soilHydration);
+            }
 
             UVRadiation uvRadiation = new UVRadiation();
             uvRadiation.setValue(uvValue);
             uvRadiation.setTimestamp(timeStamp);
             uvRadiation.setGreenhouse(greenhouse);
-            uvRadiationRepository.save(uvRadiation);
+            greenhouse = greenhouseRepository.findGreenhouseById(greenhouse.getId());
+            if (greenhouse != null) {
+                uvRadiation.setGreenhouse(greenhouse);
+                greenhouse.addUVRadiation(uvRadiation);
+                uvRadiationRepository.save(uvRadiation);
+            }
         }
     }
 

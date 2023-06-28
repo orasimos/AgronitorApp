@@ -5,8 +5,8 @@ import gr.aueb.cf.agronitor.repository.UVRadiationRepository;
 import gr.aueb.cf.agronitor.service.exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -31,6 +31,7 @@ public class UVRadiationServiceImpl implements IUVRadiationService {
         uvRadiationRepository.deleteById(id);
     }
 
+    @Transactional
     @Override
     public UVRadiation getUVRadiationById(Long id) throws EntityNotFoundException {
         UVRadiation uvRadiation;
@@ -39,6 +40,7 @@ public class UVRadiationServiceImpl implements IUVRadiationService {
         return uvRadiation;
     }
 
+    @Transactional
     @Override
     public UVRadiation getMaxUVRadiation(Long greenhouseId) throws EntityNotFoundException {
         UVRadiation uvRadiation;
@@ -47,6 +49,7 @@ public class UVRadiationServiceImpl implements IUVRadiationService {
         return uvRadiation;
     }
 
+    @Transactional
     @Override
     public UVRadiation getMinUVRadiation(Long greenhouseId) throws EntityNotFoundException {
         UVRadiation uvRadiation;
@@ -55,6 +58,7 @@ public class UVRadiationServiceImpl implements IUVRadiationService {
         return uvRadiation;
     }
 
+    @Transactional
     @Override
     public List<UVRadiation> getGreenhouseLastUV(Long greenhouseId) throws EntityNotFoundException {
         List<UVRadiation> uvRadiations = uvRadiationRepository.findLastUVRadiation(greenhouseId);

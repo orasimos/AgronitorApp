@@ -6,8 +6,8 @@ import gr.aueb.cf.agronitor.repository.GreenhouseRepository;
 import gr.aueb.cf.agronitor.service.exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -20,13 +20,13 @@ public class GreenhouseServiceImpl implements IGreenhouseService {
         this.greenhouseRepository = greenhouseRepository;
     }
 
-    @Transactional
+    @org.springframework.transaction.annotation.Transactional
     @Override
     public Greenhouse insertGreenhouse(Greenhouse greenhouse) {
         return greenhouseRepository.save(greenhouse);
     }
 
-    @Transactional
+    @org.springframework.transaction.annotation.Transactional
     @Override
     public Greenhouse updateGreenhouse(Long id, String greenhouseNewName) throws EntityNotFoundException {
         Greenhouse greenhouse = greenhouseRepository.findGreenhouseById(id);
@@ -41,6 +41,7 @@ public class GreenhouseServiceImpl implements IGreenhouseService {
         greenhouseRepository.deleteById(id);
     }
 
+    @Transactional
     @Override
     public Greenhouse getGreenhouseById(Long id) throws EntityNotFoundException {
         Greenhouse greenhouse = greenhouseRepository.findGreenhouseById(id);
@@ -48,6 +49,7 @@ public class GreenhouseServiceImpl implements IGreenhouseService {
         return greenhouse;
     }
 
+    @Transactional
     @Override
     public List<Greenhouse> getGreenhouseByName(String greenhouseName) throws EntityNotFoundException {
         List<Greenhouse> greenhouses;
@@ -56,6 +58,7 @@ public class GreenhouseServiceImpl implements IGreenhouseService {
         return greenhouses;
     }
 
+    @Transactional
     @Override
     public List<Greenhouse> getGreenhouseByUserId(Long id) throws EntityNotFoundException {
         List<Greenhouse> greenhouses;

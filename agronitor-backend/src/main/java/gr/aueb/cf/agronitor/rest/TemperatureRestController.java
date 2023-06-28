@@ -18,6 +18,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -74,6 +75,7 @@ public class TemperatureRestController {
         }
     }
 
+    @Transactional
     @Operation(summary = "Insert a new temperature reading")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Temperature reading successfully added",
@@ -93,6 +95,7 @@ public class TemperatureRestController {
             Greenhouse greenhouse = greenhouseService.getGreenhouseById(greenhouseId);
             Temperature temperature = new Temperature(dto.getTimestamp(), dto.getValue(), greenhouseId);
             temperature.setGreenhouse(greenhouse);
+            greenhouse.addTemperature(temperature);
             Temperature savedTemperature = temperatureService.insertTemperature(temperature);
             TemperatureDTO temperatureDTO = map(savedTemperature);
             URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("{id}")

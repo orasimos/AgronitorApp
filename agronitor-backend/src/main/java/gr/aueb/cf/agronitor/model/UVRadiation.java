@@ -16,7 +16,7 @@ public class UVRadiation {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "timestamp")
@@ -25,7 +25,7 @@ public class UVRadiation {
     @Column(name = "value")
     private String value;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_greenhouse", referencedColumnName = "id")
     private Greenhouse greenhouse;
 
@@ -34,6 +34,7 @@ public class UVRadiation {
         this.value = value;
 //        this.greenhouse = new Greenhouse();
         this.greenhouse.setId(greenhouseId);
+        this.greenhouse.addUVRadiation(this);
     }
 
     public Long getId() {

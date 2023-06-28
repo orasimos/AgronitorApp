@@ -95,6 +95,7 @@ public class SoilHydrationRestController {
             Greenhouse greenhouse = greenhouseService.getGreenhouseById(greenhouseId);
             SoilHydration soilHydration = new SoilHydration(dto.getTimestamp(), dto.getValue(), greenhouseId);
             soilHydration.setGreenhouse(greenhouse);
+            greenhouse.addSoilHydration(soilHydration);
             SoilHydration savedSoilhydration = soilHydrationService.insertSoilHydration(soilHydration);
             SoilHydrationDTO soilHydrationDTO = map(savedSoilhydration);
             URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("{id}")
