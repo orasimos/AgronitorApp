@@ -1,0 +1,30 @@
+package gr.aueb.cf.agronitor.service;
+
+import gr.aueb.cf.agronitor.repository.*;
+import gr.aueb.cf.agronitor.updater.MeasurementsUpdater;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+@Component
+public class MeasurementsUpdaterService {
+    private final MeasurementsUpdater measurementsUpdater;
+
+    @Autowired
+    public MeasurementsUpdaterService(GreenhouseRepository greenhouseRepository,
+                                      TemperatureRepository temperatureRepository,
+                                      HumidityRepository humidityRepository,
+                                      SoilHydrationRepository soilHydrationRepository,
+                                      UVRadiationRepository uvRadiationRepository) {
+        this.measurementsUpdater = new MeasurementsUpdater(greenhouseRepository,
+                                                           temperatureRepository,
+                                                           humidityRepository,
+                                                           soilHydrationRepository,
+                                                           uvRadiationRepository);
+    }
+
+    @Scheduled(fixedRate = 1800000)
+    public void updateMeasurements() {
+        measurementsUpdater.updateGreenhouseMeasurements();
+    }
+}

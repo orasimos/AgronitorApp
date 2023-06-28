@@ -23,20 +23,20 @@ public class Greenhouse {
     @Column(name = "greenhouse_name", length = 50, nullable = false)
     private String greenhouseName;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_user", referencedColumnName = "id")
     private User user;
 
-    @OneToMany(mappedBy = "id", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
     private List<Temperature> temperatureList;
 
-    @OneToMany(mappedBy = "id", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
     private List<Humidity> humidityList;
 
-    @OneToMany(mappedBy = "id", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
     private List<SoilHydration> soilHydrationList;
 
-    @OneToMany(mappedBy = "id", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
     private List<UVRadiation> uvRadiationList;
 
 //    Overloaded constructors
@@ -53,7 +53,7 @@ public class Greenhouse {
 
     public Greenhouse(String greenhouseName, Long userId) {
         this.greenhouseName = greenhouseName;
-        this.user = new User();
+//        this.user = new User();
         this.user.setId(userId);
     }
 

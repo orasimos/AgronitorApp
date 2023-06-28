@@ -6,6 +6,7 @@ import gr.aueb.cf.agronitor.apiclient.greenhouses.AddGreenhouseRequest;
 import gr.aueb.cf.agronitor.apiclient.greenhouses.AddGreenhouseResponse;
 import gr.aueb.cf.agronitor.apiclient.login.LoginRequest;
 import gr.aueb.cf.agronitor.apiclient.login.LoginResponse;
+import gr.aueb.cf.agronitor.apiclient.measurements.MeasurementsResponse;
 import gr.aueb.cf.agronitor.apiclient.register.RegisterRequest;
 import gr.aueb.cf.agronitor.apiclient.register.RegisterResponse;
 import gr.aueb.cf.agronitor.models.Greenhouse;
@@ -29,4 +30,7 @@ public interface IApiService {
     @POST("greenhouses/user/{userId}")
     Call<AddGreenhouseResponse> addGreenhouse(@Path("userId") String userId,
                                               @Body AddGreenhouseRequest addGreenhouseRequest);
+
+    @GET("greenhouses/measurements/{greenhouseId}")
+    Call<MeasurementsResponse> getMeasurements(@Path("greenhouseId") String greenhouseId);
 }

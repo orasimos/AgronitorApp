@@ -30,7 +30,7 @@ public class User {
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @OneToMany(mappedBy = "id", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
     private List<Greenhouse> greenhouseList = new ArrayList<>();
 
 //   Overloaded Constructors

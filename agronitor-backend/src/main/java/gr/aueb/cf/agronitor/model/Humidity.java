@@ -25,14 +25,15 @@ public class Humidity {
     @Column(name = "value")
     private String value;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_greenhouse", referencedColumnName = "id")
     private Greenhouse greenhouse;
 
     public Humidity(Date timestamp, String value, Long greenhouseId) {
         this.timestamp = timestamp;
         this.value = value;
-        this.greenhouse = new Greenhouse();
+//        this.greenhouse = new Greenhouse();
+//        this.greenhouse.setId(greenhouseId);
         this.greenhouse.setId(greenhouseId);
     }
 
