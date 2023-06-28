@@ -61,7 +61,8 @@ public class GreenhouseAdapter extends RecyclerView.Adapter<GreenhouseAdapter.My
                 Toast.makeText(v.getContext(),
                         holder.greenhouseNameTV.getText().toString(), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context, ManagementActivity.class);
-                intent.putExtra("greenhouseId", greenhouse.getId());
+                intent.putExtra("greenhouseId", greenhouse.getId().toString());
+                System.out.println("Adapter: " + greenhouse.getId().toString());
                 context.startActivity(intent);
             }
         });

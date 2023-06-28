@@ -13,6 +13,7 @@ public class MeasurementsResponse {
     private String maxHydr;
     private String minUV;
     private String maxUV;
+    private String greenhouseId;
 
     public MeasurementsResponse(String currentTemp,
                                 String currentHum,
@@ -25,7 +26,8 @@ public class MeasurementsResponse {
                                 String minHydr,
                                 String maxHydr,
                                 String minUV,
-                                String maxUV) {
+                                String maxUV,
+                                String greenhouseId) {
         this.currentTemp = currentTemp;
         this.currentHum = currentHum;
         this.currentHydr = currentHydr;
@@ -38,6 +40,7 @@ public class MeasurementsResponse {
         this.maxHydr = maxHydr;
         this.minUV = minUV;
         this.maxUV = maxUV;
+        this.greenhouseId = greenhouseId;
     }
 
     public String getCurrentTemp() {
@@ -111,5 +114,11 @@ public class MeasurementsResponse {
     }
     public void setMaxUV(String maxUV) {
         this.maxUV = maxUV;
+    }
+    public String getGreenhouseId() {
+        return greenhouseId;
+    }
+    public void setGreenhouseId(String greenhouseId) {
+        this.greenhouseId = greenhouseId;
     }
 }

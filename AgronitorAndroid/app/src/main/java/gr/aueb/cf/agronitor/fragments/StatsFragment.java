@@ -11,8 +11,6 @@ import android.widget.TextView;
 
 import gr.aueb.cf.agronitor.R;
 
-//  TODO:Setup stats fragment correctly to communicate with the Management activity
-
 public class StatsFragment extends Fragment {
 
 //    Temperature
@@ -43,7 +41,6 @@ public class StatsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_stats, container, false);
 
         currentTempTV = view.findViewById(R.id.currentTempTV);
-        currentTempTV.setText("Current Temperature: 28C");
         minTempTV = view.findViewById(R.id.minTempTV);
         maxTempTV = view.findViewById(R.id.maxTempTV);
         currentHumidityTV = view.findViewById(R.id.currentHumidityTV);
@@ -56,7 +53,33 @@ public class StatsFragment extends Fragment {
         minUVRadiationTV = view.findViewById(R.id.minUVRadiationTV);
         maxUVRadiationTV = view.findViewById(R.id.maxUVRadiationTV);
 
-        // Inflate the layout for this fragment
+        Bundle bundle = getArguments();
+        String currentTemp = bundle.getString("currentTemp");
+        String currentHum = bundle.getString("currentHum");
+        String currentHydr = bundle.getString("currentHydr");
+        String currentUV = bundle.getString("currentUV");
+        String minTemp = bundle.getString("minTemp");
+        String maxTemp = bundle.getString("maxTemp");
+        String minHum = bundle.getString("minHum");
+        String maxHum = bundle.getString("maxHum");
+        String minHydr = bundle.getString("minHydr");
+        String maxHydr = bundle.getString("maxHydr");
+        String minUV = bundle.getString("minUV");
+        String maxUV = bundle.getString("maxUV");
+
+        currentTempTV.setText("Current Temperature: " + currentTemp + "\\u2109");
+        currentHumidityTV.setText("Current Humidity: " + currentHum + "%");
+        currentSoilHydrationTV.setText("Current Soil Hydration: " + currentHydr + "%");
+        currentUVRadiationTV.setText("Current UV Radiation: " + currentUV + "mW/m2");
+        minTempTV.setText("min: " + minTemp);
+        maxTempTV.setText("max: " + maxTemp);
+        minHumidityTV.setText("min: " + minHum);
+        maxHumidityTV.setText("max: " + maxHum);
+        minSoilHydrationTV.setText("min: " + minHydr);
+        maxSoilHydrationTV.setText("max: " + maxHydr);
+        minUVRadiationTV.setText("min: " + minUV);
+        maxUVRadiationTV.setText("max: " + maxUV);
+
         return view;
     }
 }

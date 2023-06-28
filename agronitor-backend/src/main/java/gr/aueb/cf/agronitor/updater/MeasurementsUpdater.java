@@ -99,27 +99,27 @@ public class MeasurementsUpdater {
         double min = 20.0;
         double max = 40.0;
         double randomValue = min + Math.random() * (max - min);
-        return String.valueOf(randomValue);
+        return String.format("%.2f", randomValue);
     }
 
     private String generateHumidityValue() {
         double min = 0.0;
         double max = 100.0;
         double randomValue = min + Math.random() * (max - min);
-        return String.valueOf(randomValue);
+        return String.format("%.2f", randomValue);
     }
 
     private String generateSoilHydrationValue() {
         double min = 0.0;
         double max = 100.0;
         double randomValue = min + Math.random() * (max - min);
-        return String.valueOf(randomValue);
+        return String.format("%.2f", randomValue);
     }
 
     private String generateUVRadiationValue() {
         double min = 0.0;
         double max = 100.0;
         double randomValue = min + Math.random() * (max - min);
-        return String.valueOf(randomValue);
+        return String.format("%.2f", randomValue);
     }
 }
