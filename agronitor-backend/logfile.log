@@ -26,3 +26,43 @@ Jun 28, 2023 1:20:33 PM gr.aueb.cf.agronitor.rest.GreenhouseRestController findG
 WARNING: Entity Greenhouse with id 0 does not exist
 Jun 28, 2023 2:08:57 PM gr.aueb.cf.agronitor.rest.GreenhouseRestController findGreenhousesByUserId
 WARNING: Entity Greenhouse with id 0 does not exist
+Jun 28, 2023 6:27:59 PM gr.aueb.cf.agronitor.rest.GreenhouseRestController findGreenhousesByUserId
+WARNING: Entity Greenhouse with id 0 does not exist
+Jun 28, 2023 6:28:59 PM gr.aueb.cf.agronitor.rest.MeasurementsRestController getAllMeasurements
+WARNING: Entity Temperature with id 0 does not exist
+Jun 28, 2023 6:29:26 PM gr.aueb.cf.agronitor.rest.MeasurementsRestController getAllMeasurements
+WARNING: Entity Temperature with id 0 does not exist
+Jun 28, 2023 6:30:25 PM gr.aueb.cf.agronitor.rest.MeasurementsRestController getAllMeasurements
+WARNING: Entity Temperature with id 0 does not exist
+Jun 28, 2023 6:32:03 PM gr.aueb.cf.agronitor.rest.MeasurementsRestController getAllMeasurements
+WARNING: Entity Temperature with id 0 does not exist
+Jun 28, 2023 6:33:11 PM gr.aueb.cf.agronitor.rest.MeasurementsRestController getAllMeasurements
+WARNING: Entity Temperature with id 0 does not exist
+Jun 28, 2023 6:33:34 PM gr.aueb.cf.agronitor.rest.MeasurementsRestController getAllMeasurements
+WARNING: Entity Temperature with id 0 does not exist
+Jun 28, 2023 6:34:01 PM gr.aueb.cf.agronitor.rest.MeasurementsRestController getAllMeasurements
+WARNING: Entity Temperature with id 0 does not exist
+Jun 28, 2023 6:34:25 PM gr.aueb.cf.agronitor.rest.MeasurementsRestController getAllMeasurements
+WARNING: Entity Temperature with id 0 does not exist
+Jun 28, 2023 6:38:25 PM gr.aueb.cf.agronitor.rest.MeasurementsRestController getAllMeasurements
+WARNING: Entity Temperature with id 0 does not exist
+Jun 28, 2023 6:40:14 PM gr.aueb.cf.agronitor.rest.MeasurementsRestController getAllMeasurements
+WARNING: Entity Temperature with id 0 does not exist
+Jun 28, 2023 6:42:16 PM gr.aueb.cf.agronitor.rest.MeasurementsRestController getAllMeasurements
+WARNING: Entity Temperature with id 0 does not exist
+Jun 28, 2023 6:46:20 PM gr.aueb.cf.agronitor.rest.MeasurementsRestController getAllMeasurements
+WARNING: Entity Temperature with id 0 does not exist
+Jun 28, 2023 6:47:43 PM gr.aueb.cf.agronitor.rest.MeasurementsRestController getAllMeasurements
+WARNING: Entity Temperature with id 0 does not exist
+Jun 28, 2023 6:53:26 PM gr.aueb.cf.agronitor.rest.MeasurementsRestController getAllMeasurements
+WARNING: Entity Temperature with id 0 does not exist
+Jun 28, 2023 6:53:35 PM gr.aueb.cf.agronitor.rest.MeasurementsRestController getAllMeasurements
+WARNING: Entity Temperature with id 0 does not exist
+Jun 28, 2023 7:10:16 PM gr.aueb.cf.agronitor.rest.UserRestController loginUser
+WARNING: Entity User with id 0 does not exist
+Jun 28, 2023 7:10:31 PM gr.aueb.cf.agronitor.rest.UserRestController loginUser
+WARNING: Entity User with id 0 does not exist
+Jun 28, 2023 7:25:23 PM gr.aueb.cf.agronitor.rest.UserRestController loginUser
+WARNING: Entity User with id 0 does not exist
+Jun 28, 2023 7:33:15 PM gr.aueb.cf.agronitor.rest.UserRestController loginUser
+WARNING: Entity User with id 0 does not exist

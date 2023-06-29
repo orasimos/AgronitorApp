@@ -63,14 +63,15 @@ public class MeasurementsRestController {
     @Operation(summary = "Get all measurements for a greenhouse")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Measurements found",
-            content = { @Content(mediaType = "application/json",
-            schema = @Schema(implementation = MeasurementsDTO.class)) }),
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = MeasurementsDTO.class)) }),
             @ApiResponse(responseCode = "404", description = "Measurement readings not found",
-            content = @Content)})
+                    content = @Content)})
     @RequestMapping(value = "/{greenhouseId}", method = RequestMethod.GET)
     public ResponseEntity<MeasurementsDTO> getAllMeasurements(@PathVariable("greenhouseId") Long greenhouseId) {
         try {
             String minTemp = temperatureService.getMinTemperature(greenhouseId).getValue();
+            System.out.println("minTemp = " + minTemp);
             String maxTemp = temperatureService.getMaxTemperature(greenhouseId).getValue();
             List<Temperature> temperatureList = temperatureService.getGreenhouseLastTemp(greenhouseId);
             String currentTemp = temperatureList.get(0).getValue();
@@ -90,19 +91,20 @@ public class MeasurementsRestController {
             List<UVRadiation> uvRadiationList = uvRadiationService.getGreenhouseLastUV(greenhouseId);
             String currentUV = uvRadiationList.get(0).getValue();
 
-            MeasurementsDTO measurementsDTO = new MeasurementsDTO(currentTemp,
-                                                                  currentHum,
-                                                                  currentHydr,
-                                                                  currentUV,
-                                                                  minTemp,
-                                                                  maxTemp,
-                                                                  minHum,
-                                                                  maxHum,
-                                                                  minHydr,
-                                                                  maxHydr,
-                                                                  minUV,
-                                                                  maxUV,
-                                                                  String.valueOf(greenhouseId));
+            MeasurementsDTO measurementsDTO = new MeasurementsDTO();
+            measurementsDTO.setCurrentTemp(currentTemp);
+            measurementsDTO.setCurrentHum(currentHum);
+            measurementsDTO.setCurrentHydr(currentHydr);
+            measurementsDTO.setCurrentUV(currentUV);
+            measurementsDTO.setMinTemp(minTemp);
+            measurementsDTO.setMaxTemp(maxTemp);
+            measurementsDTO.setMinHum(minHum);
+            measurementsDTO.setMaxHum(maxHum);
+            measurementsDTO.setMinHydr(minHydr);
+            measurementsDTO.setMaxHydr(maxHydr);
+            measurementsDTO.setMinUV(minUV);
+            measurementsDTO.setMaxUV(maxUV);
+
             return new ResponseEntity<>(measurementsDTO, HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             LoggerUtil.getCurrentLogger().warning(e.getMessage());
