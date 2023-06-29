@@ -68,7 +68,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginUser() {
-        LoginRequest loginRequest = new LoginRequest(usernameET.getText().toString(), passwordET.getText().toString());
+        LoginRequest loginRequest = new LoginRequest(usernameET.getText().toString().trim(),
+                                                     passwordET.getText().toString().trim());
         IApiService apiService;
         apiService = ApiClient.getApiClient().create(IApiService.class);
         Call<LoginResponse> call = apiService.loginUser(loginRequest);

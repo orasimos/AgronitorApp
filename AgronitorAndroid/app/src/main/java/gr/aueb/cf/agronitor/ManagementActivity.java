@@ -64,26 +64,26 @@ public class ManagementActivity extends AppCompatActivity implements NavigationB
 
         bottomNavView = findViewById(R.id.bottomNavView);
         bottomNavView.setOnItemSelectedListener(this);
-        bottomNavView.setSelectedItemId(R.id.stats);
+//        bottomNavView.setSelectedItemId(R.id.stats);
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.stats) {
-            Bundle bundle = new Bundle();
-            bundle.putString("currentTemp", currentTemp);
-            bundle.putString("currentHum", currentHum);
-            bundle.putString("currentHydr", currentHydr);
-            bundle.putString("currentUV", currentUV);
-            bundle.putString("minTemp", minTemp);
-            bundle.putString("maxTemp", maxTemp);
-            bundle.putString("minHum", minHum);
-            bundle.putString("maxHum", maxHum);
-            bundle.putString("minHydr", minHydr);
-            bundle.putString("maxHydr", maxHydr);
-            bundle.putString("minUV", minUV);
-            bundle.putString("maxUV", maxUV);
-            statsFragment.setArguments(bundle);
+//            Bundle bundle = new Bundle();
+//            bundle.putString("currentTemp", currentTemp);
+//            bundle.putString("currentHum", currentHum);
+//            bundle.putString("currentHydr", currentHydr);
+//            bundle.putString("currentUV", currentUV);
+//            bundle.putString("minTemp", minTemp);
+//            bundle.putString("maxTemp", maxTemp);
+//            bundle.putString("minHum", minHum);
+//            bundle.putString("maxHum", maxHum);
+//            bundle.putString("minHydr", minHydr);
+//            bundle.putString("maxHydr", maxHydr);
+//            bundle.putString("minUV", minUV);
+//            bundle.putString("maxUV", maxUV);
+//            statsFragment.setArguments(bundle);
             getSupportFragmentManager().beginTransaction().replace(R.id.FragmentFL, statsFragment).commit();
             return true;
         } else if (item.getItemId() == R.id.alarms) {
@@ -112,6 +112,7 @@ public class ManagementActivity extends AppCompatActivity implements NavigationB
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
                         currentTemp = response.body().getCurrentTemp();
+                        System.out.println(currentTemp);
                         currentHum = response.body().getCurrentHum();
                         currentHydr = response.body().getCurrentHydr();
                         currentUV = response.body().getCurrentUV();
@@ -123,6 +124,22 @@ public class ManagementActivity extends AppCompatActivity implements NavigationB
                         maxHydr = response.body().getMaxHydr();
                         minUV = response.body().getMinUV();
                         maxUV = response.body().getMaxUV();
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString("currentTemp", currentTemp);
+                        bundle.putString("currentHum", currentHum);
+                        bundle.putString("currentHydr", currentHydr);
+                        bundle.putString("currentUV", currentUV);
+                        bundle.putString("minTemp", minTemp);
+                        bundle.putString("maxTemp", maxTemp);
+                        bundle.putString("minHum", minHum);
+                        bundle.putString("maxHum", maxHum);
+                        bundle.putString("minHydr", minHydr);
+                        bundle.putString("maxHydr", maxHydr);
+                        bundle.putString("minUV", minUV);
+                        bundle.putString("maxUV", maxUV);
+                        statsFragment.setArguments(bundle);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.FragmentFL, statsFragment).commit();
                     } else {
                         Toast.makeText(ManagementActivity.this, "There are not measurements yet", Toast.LENGTH_SHORT).show();
                     }

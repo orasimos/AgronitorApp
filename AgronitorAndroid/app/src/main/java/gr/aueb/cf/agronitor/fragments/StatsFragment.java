@@ -67,10 +67,10 @@ public class StatsFragment extends Fragment {
         String minUV = bundle.getString("minUV");
         String maxUV = bundle.getString("maxUV");
 
-        currentTempTV.setText("Current Temperature: " + currentTemp + "\\u2109");
+        currentTempTV.setText("Current Temperature: " + currentTemp + " C");
         currentHumidityTV.setText("Current Humidity: " + currentHum + "%");
         currentSoilHydrationTV.setText("Current Soil Hydration: " + currentHydr + "%");
-        currentUVRadiationTV.setText("Current UV Radiation: " + currentUV + "mW/m2");
+        currentUVRadiationTV.setText("Current UV Radiation: " + currentUV + "");
         minTempTV.setText("min: " + minTemp);
         maxTempTV.setText("max: " + maxTemp);
         minHumidityTV.setText("min: " + minHum);

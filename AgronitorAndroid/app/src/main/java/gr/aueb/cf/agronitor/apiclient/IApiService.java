@@ -11,7 +11,9 @@ import gr.aueb.cf.agronitor.apiclient.register.RegisterRequest;
 import gr.aueb.cf.agronitor.apiclient.register.RegisterResponse;
 import gr.aueb.cf.agronitor.models.Greenhouse;
 import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -33,4 +35,7 @@ public interface IApiService {
 
     @GET("greenhouses/measurements/{greenhouseId}")
     Call<MeasurementsResponse> getMeasurements(@Path("greenhouseId") String greenhouseId);
+
+    @DELETE("greenhouses/{greenhouseId}")
+    Call<Greenhouse> deleteGreenhouse(@Path("greenhouseId") String greenhouseId);
 }

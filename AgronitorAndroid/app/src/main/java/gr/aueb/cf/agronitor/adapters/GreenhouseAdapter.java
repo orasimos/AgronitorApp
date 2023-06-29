@@ -26,9 +26,16 @@ import java.util.List;
 import gr.aueb.cf.agronitor.MainActivity;
 import gr.aueb.cf.agronitor.ManagementActivity;
 import gr.aueb.cf.agronitor.R;
+import gr.aueb.cf.agronitor.apiclient.ApiClient;
+import gr.aueb.cf.agronitor.apiclient.IApiService;
 import gr.aueb.cf.agronitor.models.Greenhouse;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class GreenhouseAdapter extends RecyclerView.Adapter<GreenhouseAdapter.MyViewHolder> {
+
+    private static String greenhouseId;
 
     private final Context context;
     private ArrayList<Greenhouse> greenhouseArrayList;
@@ -54,6 +61,7 @@ public class GreenhouseAdapter extends RecyclerView.Adapter<GreenhouseAdapter.My
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Greenhouse greenhouse = greenhouseArrayList.get(position);
+        greenhouseId = greenhouse.getId().toString();
         holder.greenhouseNameTV.setText(greenhouse.getGreenhouseName());
         holder.greenhouseCardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,6 +104,7 @@ public class GreenhouseAdapter extends RecyclerView.Adapter<GreenhouseAdapter.My
 
         @Override
         public boolean onMenuItemClick(MenuItem item) {
+
             if (item.getItemId() == R.id.action_popup_remove) {
                 new AlertDialog.Builder(greenhouseCardView.getContext())
                         .setTitle("Remove Greenhouse")
@@ -104,6 +113,8 @@ public class GreenhouseAdapter extends RecyclerView.Adapter<GreenhouseAdapter.My
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 //                                TODO: api call to remove greenhouse
+//                                removeGreenhouse(greenhouseId);
+
                             }
                         })
                         .setNegativeButton("No", null)
@@ -120,5 +131,23 @@ public class GreenhouseAdapter extends RecyclerView.Adapter<GreenhouseAdapter.My
             popupMenu.setOnMenuItemClickListener(this);
             popupMenu.show();
         }
+
+//        private void removeGreenhouse(String greenhouseId) {
+//            IApiService apiService = ApiClient.getApiClient().create(IApiService.class);
+//            Call<Greenhouse> call = apiService.deleteGreenhouse(greenhouseId);
+//            call.enqueue(new Callback<Greenhouse>() {
+//                @Override
+//                public void onResponse(Call<Greenhouse> call, Response<Greenhouse> response) {
+//                    if (response.isSuccessful()) {
+//                        Toast.makeText(context, "Greenhouse removed successfully!", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<Greenhouse> call, Throwable t) {
+//                    Toast.makeText(context, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+//                }
+//            });
+//        }
     }
 }
