@@ -10,8 +10,9 @@ It displays data on temperature, humidity, soil hydration, and UV radiation leve
 - Basic user authentication functionality.
 
 ## Upcoming features
-- Receive notifications when measurement values exceed the defined thresholds.
 - User authentication and authorization for secure access.
+- Receive notifications when measurement values exceed the defined thresholds.
+- Visual represantation of data with graphs to help the user visualize the fluctuations of each greenhouse's measurements in specidied time periods.
 
 ## Technologies Used
 - Java
@@ -20,6 +21,9 @@ It displays data on temperature, humidity, soil hydration, and UV radiation leve
 - Tomcat
 - Android
 - Swagger
+
+## API Documentation
+The api documentation can be found at: http://localhost:8080/swagger-ui/index.html
 
 ## Disclaimer
 Currently the app uses an internal script to update the measurements of each greenhouse in 30 minute intervals.
@@ -34,8 +38,7 @@ The ultimate goal of the app is to use an arduino with temperature, humidity, so
 - Tomcat 9.0
 
 ### Installation
-1. Clone the repository:
-    git clone https://github.com/orasimos/AgronitorApp.git
+1. Clone the repository: https://github.com/orasimos/AgronitorApp.git
 
 2. Create the MySQL database using the script 'agrinitor_testdb.sql'.
 
