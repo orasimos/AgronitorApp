@@ -108,49 +108,6 @@ public class TemperatureRestController {
 
     }
 
-    @Operation(summary = "Delete a temperature by id")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Temperature reading deleted successfully",
-            content = {@Content(mediaType = "application/json",
-            schema = @Schema(implementation = TemperatureDTO.class))}),
-            @ApiResponse(responseCode = "404", description = "Temperature reading not found",
-            content = @Content)})
-    @RequestMapping(value = "/temp/{tempId}", method = RequestMethod.DELETE)
-    public ResponseEntity<TemperatureDTO> deleteTemperature(@PathVariable("tempId") Long tempId) {
-        try {
-            Temperature temperature = temperatureService.getTemperatureById(tempId);
-            temperatureService.deleteTemperature(tempId);
-            TemperatureDTO temperatureDTO = map(temperature);
-            return new ResponseEntity<>(temperatureDTO, HttpStatus.OK);
-        } catch (EntityNotFoundException e) {
-            LoggerUtil.getCurrentLogger().warning(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-//    @Operation(summary = "Get greenhouse temperature reading by timestamp")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200", description = "Temperature reading found",
-//            content = {@Content(mediaType = "application/json",
-//            schema = @Schema(implementation = TemperatureDTO.class))}),
-//            @ApiResponse(responseCode = "404", description = "Temperature reading not found",
-//            content = @Content)})
-//    @RequestMapping(value = "/temp/greenhouse/{greenhouseId}", method = RequestMethod.GET)
-//    public ResponseEntity<TemperatureDTO> getGreenhouseTempByTimestamp(@PathVariable("greenhouseId") Long greenhouseId,
-//                                                       @RequestParam("timestamp") Date timestamp) {
-//        try {
-//            Temperature temperature = temperatureService.getGreenhouseTempByTimestamp(timestamp, greenhouseId);
-//            TemperatureDTO temperatureDTO = new TemperatureDTO(temperature.getId(),
-//                                                              temperature.getTimestamp(),
-//                                                              temperature.getValue(),
-//                                                              temperature.getGreenhouse().getId());
-//            return new ResponseEntity<>(temperatureDTO, HttpStatus.OK);
-//        } catch (EntityNotFoundException e) {
-//            LoggerUtil.getCurrentLogger().warning(e.getMessage());
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//    }
-
     @Operation(summary = "Get greenhouse max temperature reading")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Temperature reading found",

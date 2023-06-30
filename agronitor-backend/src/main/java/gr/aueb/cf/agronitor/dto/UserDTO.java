@@ -3,6 +3,7 @@ package gr.aueb.cf.agronitor.dto;
 import gr.aueb.cf.agronitor.model.Greenhouse;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
+@ApiIgnore
 public class UserDTO {
 
     private Long id;
@@ -28,12 +30,6 @@ public class UserDTO {
 
     public UserDTO(Long id, String username, String password, String email) {
         this.id = id;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-    }
-
-    public UserDTO(String username, String password, String email) {
         this.username = username;
         this.password = password;
         this.email = email;

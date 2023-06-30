@@ -3,11 +3,13 @@ package gr.aueb.cf.agronitor.dto;
 import gr.aueb.cf.agronitor.model.Greenhouse;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.Date;
 
 @Data
 @NoArgsConstructor
+@ApiIgnore
 public class UVRadiationDTO {
 
     private Long id;
@@ -18,12 +20,6 @@ public class UVRadiationDTO {
 
     public UVRadiationDTO(Long id, Date timestamp, String value, Long greenhouseId) {
         this.id = id;
-        this.timestamp = timestamp;
-        this.value = value;
-        this.greenhouseId = greenhouseId;
-    }
-
-    public UVRadiationDTO(Date timestamp, String value, Long greenhouseId) {
         this.timestamp = timestamp;
         this.value = value;
         this.greenhouseId = greenhouseId;

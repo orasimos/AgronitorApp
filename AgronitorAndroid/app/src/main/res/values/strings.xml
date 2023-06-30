@@ -20,20 +20,20 @@
     <string name="automations">Automations</string>
     <string name="alarms">Alarms</string>
 
-    <!--    greenhouse card-view      -->
+    <!--    greenhouse card-view    -->
     <string name="greenhouse_name">Greenhouse Name</string>
 
     <!--    add greenhouse button   -->
     <string name="add_greenhouse_btn_desc">Button to add new greenhouse</string>
 
-    <!--    Login form      -->
+    <!--    Login form  -->
     <string name="login_username">Username</string>
     <string name="login_password">Password</string>
     <string name="login_button">Login</string>
     <string name="register_button">Register</string>
     <string name="no_account">Don\'t have an account?</string>
 
-    <!--    Register form       -->
+    <!--    Register form   -->
     <string name="register_email">Email*</string>
     <string name="register_username">Username*</string>
     <string name="register_password">Password*</string>
@@ -51,6 +51,9 @@
     <string name="min">min:</string>
     <string name="max">max:</string>
 
+    <!--    Empty Stats Fragment    -->
+    <string name="empty_stats">There are no measurements yet</string>
+
     <!--    Alarms Fragment   -->
     <string name="set_temperature">Set temperature targets:</string>
     <string name="set_humidity">Set humidity targets:</string>
@@ -62,6 +65,7 @@
     <!--    Settings Fragment  -->
     <string name="rename">Rename Greenhouse:</string>
     <string name="save">Save Changes</string>
+    <string name="remove">Remove Greenhouse</string>
 
     <!--    titles      -->
     <string name="user_settings_title">User Settings</string>

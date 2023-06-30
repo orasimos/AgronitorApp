@@ -112,7 +112,7 @@ public class GreenhouseRestController {
                         schema = @Schema(implementation = GreenhouseDTO.class))}),
             @ApiResponse(responseCode = "404", description = "No greenhouses belong to this user",
                     content = @Content)})
-    @RequestMapping(path = "/greenhouses/user/{userId}")
+    @RequestMapping(path = "/greenhouses/user/{userId}", method = RequestMethod.GET)
     public ResponseEntity<List<GreenhouseNoUserDTO>> findGreenhousesByUserId(@PathVariable("userId") Long userId) {
         List<Greenhouse> greenhouses;
         try {
@@ -216,13 +216,6 @@ public class GreenhouseRestController {
         greenhouseDTO.setGreenhouseName(greenhouse.getGreenhouseName());
         greenhouseDTO.setUserId(greenhouse.getUser().getId());
         return greenhouseDTO;
-    }
-
-    private Greenhouse mapDto(GreenhouseDTO dto) {
-        Greenhouse greenhouse = new Greenhouse();
-        greenhouse.setGreenhouseName(dto.getGreenhouseName());
-        greenhouse.setUser(dto.getUser());
-        return greenhouse;
     }
 
     private GreenhouseNoUserDTO mapNoUser(Greenhouse greenhouse) {

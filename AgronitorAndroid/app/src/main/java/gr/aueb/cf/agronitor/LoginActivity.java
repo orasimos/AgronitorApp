@@ -5,23 +5,24 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 
-
 import java.util.Objects;
 
 import gr.aueb.cf.agronitor.apiclient.ApiClient;
 import gr.aueb.cf.agronitor.apiclient.IApiService;
-import gr.aueb.cf.agronitor.apiclient.login.LoginRequest;
-import gr.aueb.cf.agronitor.apiclient.login.LoginResponse;
+import gr.aueb.cf.agronitor.apiclient.requests.LoginRequest;
+import gr.aueb.cf.agronitor.apiclient.responses.LoginResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Activity for user authentication.
+ */
 public class LoginActivity extends AppCompatActivity {
 
     private TextInputEditText usernameET;
@@ -33,6 +34,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
+
 
         usernameET = findViewById(R.id.usernameTextInputEditText);
         passwordET = findViewById(R.id.passwordTextInputEditText);
@@ -80,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(response.isSuccessful()) {
                     String username = usernameET.getText().toString();
                     Toast.makeText(LoginActivity.this, "Welcome back " + username, Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, GreenhouseViewActivity.class);
                     intent.putExtra("userId", response.body().getId().toString());
                     startActivity(intent);
                 } else {
@@ -99,4 +103,6 @@ public class LoginActivity extends AppCompatActivity {
     public void onBackPressed() {
 //        super.onBackPressed();
     }
+
+
 }

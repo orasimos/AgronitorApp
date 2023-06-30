@@ -10,18 +10,17 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.io.IOException;
-
 import gr.aueb.cf.agronitor.apiclient.ApiClient;
 import gr.aueb.cf.agronitor.apiclient.IApiService;
-import gr.aueb.cf.agronitor.apiclient.register.RegisterRequest;
-import gr.aueb.cf.agronitor.apiclient.register.RegisterResponse;
-import gr.aueb.cf.agronitor.models.User;
+import gr.aueb.cf.agronitor.apiclient.requests.RegisterRequest;
+import gr.aueb.cf.agronitor.apiclient.responses.RegisterResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import okhttp3.ResponseBody;
 
+/**
+ * Activity for user registration
+ */
 public class RegisterActivity extends AppCompatActivity {
 
     private TextInputEditText emailET;
@@ -100,6 +99,4 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-
-
 }

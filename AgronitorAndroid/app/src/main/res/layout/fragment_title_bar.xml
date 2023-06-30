@@ -17,12 +17,11 @@
             android:id="@+id/logoIV"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:src="@drawable/agro_guard_logo"
+            android:src="@drawable/agronitor_logo"
             android:layout_weight="2"
             android:layout_marginStart="10dp"
             android:contentDescription="@string/logo_image" />
 
-        <!--    TODO: Display the name of the greenhouse when in management activity    -->
         <TextView
             android:id="@+id/ViewName"
             android:layout_width="0dp"

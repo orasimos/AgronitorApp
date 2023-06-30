@@ -13,11 +13,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 
 import gr.aueb.cf.agronitor.LoginActivity;
-import gr.aueb.cf.agronitor.MainActivity;
 import gr.aueb.cf.agronitor.R;
 
+/**
+ * A Fragment that displays the title bar of the app.
+ */
 public class TitleBarFragment extends Fragment implements View.OnClickListener{
 
     private AppCompatImageButton popupMenuBtn;
@@ -37,6 +40,7 @@ public class TitleBarFragment extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_title_bar, container, false);
+
         popupMenuBtn = view.findViewById(R.id.popupMenuBtn);
         popupMenuBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,7 +48,6 @@ public class TitleBarFragment extends Fragment implements View.OnClickListener{
                 PopupMenu popupMenu = new PopupMenu(getContext(), popupMenuBtn);
                 popupMenu.inflate(R.menu.popup_settings_menu);
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//                    TODO: add button actions
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         if (item.getItemId() == R.id.action_logout) {
@@ -54,7 +57,6 @@ public class TitleBarFragment extends Fragment implements View.OnClickListener{
                                     .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-//                                            TODO: Logout from app.
                                             Intent intent = new Intent(getContext(), LoginActivity.class);
                                             startActivity(intent);
                                         }

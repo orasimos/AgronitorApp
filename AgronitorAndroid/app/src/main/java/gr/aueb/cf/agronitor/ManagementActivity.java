@@ -3,6 +3,7 @@ package gr.aueb.cf.agronitor;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -11,14 +12,18 @@ import com.google.android.material.navigation.NavigationBarView;
 
 import gr.aueb.cf.agronitor.apiclient.ApiClient;
 import gr.aueb.cf.agronitor.apiclient.IApiService;
-import gr.aueb.cf.agronitor.apiclient.measurements.MeasurementsResponse;
+import gr.aueb.cf.agronitor.apiclient.responses.MeasurementsResponse;
 import gr.aueb.cf.agronitor.fragments.AlarmsFragment;
 import gr.aueb.cf.agronitor.fragments.SettingsFragment;
 import gr.aueb.cf.agronitor.fragments.StatsFragment;
+import gr.aueb.cf.agronitor.fragments.StatsFragmentEmpty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Activity for managing a specific greenhouse.
+ */
 public class ManagementActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 
     private NavigationBarView bottomNavView;
@@ -35,7 +40,10 @@ public class ManagementActivity extends AppCompatActivity implements NavigationB
     private String minUV;
     private String maxUV;
 
+    boolean statsAreEmpty = true;
+
     StatsFragment statsFragment = new StatsFragment();
+    StatsFragmentEmpty statsFragmentEmpty = new StatsFragmentEmpty();
     AlarmsFragment alarmsFragment = new AlarmsFragment();
     SettingsFragment settingsFragment = new SettingsFragment();
 
@@ -45,46 +53,38 @@ public class ManagementActivity extends AppCompatActivity implements NavigationB
         setContentView(R.layout.activity_management);
 
         String greenhouseId = getIntent().getStringExtra("greenhouseId");
+        String greenhouseName = getIntent().getStringExtra("greenhouseName");
+        String userId = getIntent().getStringExtra("userId");
         getMeasurements(greenhouseId);
 
-        Bundle bundle = new Bundle();
-        bundle.putString("currentTemp", currentTemp);
-        bundle.putString("currentHum", currentHum);
-        bundle.putString("currentHydr", currentHydr);
-        bundle.putString("currentUV", currentUV);
-        bundle.putString("minTemp", minTemp);
-        bundle.putString("maxTemp", maxTemp);
-        bundle.putString("minHum", minHum);
-        bundle.putString("maxHum", maxHum);
-        bundle.putString("minHydr", minHydr);
-        bundle.putString("maxHydr", maxHydr);
-        bundle.putString("minUV", minUV);
-        bundle.putString("maxUV", maxUV);
-        statsFragment.setArguments(bundle);
+        Bundle infoBundle = new Bundle();
+        infoBundle.putString("greenhouseId", greenhouseId);
+        infoBundle.putString("greenhouseName", greenhouseName);
+        infoBundle.putString("userId", userId);
+
+        statsFragment.setArguments(infoBundle);
+        alarmsFragment.setArguments(infoBundle);
+        settingsFragment.setArguments(infoBundle);
 
         bottomNavView = findViewById(R.id.bottomNavView);
         bottomNavView.setOnItemSelectedListener(this);
-//        bottomNavView.setSelectedItemId(R.id.stats);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, GreenhouseViewActivity.class);
+        intent.putExtra("userId", getIntent().getStringExtra("userId"));
+        startActivity(intent);
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.stats) {
-//            Bundle bundle = new Bundle();
-//            bundle.putString("currentTemp", currentTemp);
-//            bundle.putString("currentHum", currentHum);
-//            bundle.putString("currentHydr", currentHydr);
-//            bundle.putString("currentUV", currentUV);
-//            bundle.putString("minTemp", minTemp);
-//            bundle.putString("maxTemp", maxTemp);
-//            bundle.putString("minHum", minHum);
-//            bundle.putString("maxHum", maxHum);
-//            bundle.putString("minHydr", minHydr);
-//            bundle.putString("maxHydr", maxHydr);
-//            bundle.putString("minUV", minUV);
-//            bundle.putString("maxUV", maxUV);
-//            statsFragment.setArguments(bundle);
-            getSupportFragmentManager().beginTransaction().replace(R.id.FragmentFL, statsFragment).commit();
+            if (statsAreEmpty) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.FragmentFL, statsFragmentEmpty).commit();
+            } else {
+                getSupportFragmentManager().beginTransaction().replace(R.id.FragmentFL, statsFragment).commit();
+            }
             return true;
         } else if (item.getItemId() == R.id.alarms) {
             getSupportFragmentManager().beginTransaction().replace(R.id.FragmentFL, alarmsFragment).commit();
@@ -112,7 +112,6 @@ public class ManagementActivity extends AppCompatActivity implements NavigationB
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
                         currentTemp = response.body().getCurrentTemp();
-                        System.out.println(currentTemp);
                         currentHum = response.body().getCurrentHum();
                         currentHydr = response.body().getCurrentHydr();
                         currentUV = response.body().getCurrentUV();
@@ -125,22 +124,26 @@ public class ManagementActivity extends AppCompatActivity implements NavigationB
                         minUV = response.body().getMinUV();
                         maxUV = response.body().getMaxUV();
 
-                        Bundle bundle = new Bundle();
-                        bundle.putString("currentTemp", currentTemp);
-                        bundle.putString("currentHum", currentHum);
-                        bundle.putString("currentHydr", currentHydr);
-                        bundle.putString("currentUV", currentUV);
-                        bundle.putString("minTemp", minTemp);
-                        bundle.putString("maxTemp", maxTemp);
-                        bundle.putString("minHum", minHum);
-                        bundle.putString("maxHum", maxHum);
-                        bundle.putString("minHydr", minHydr);
-                        bundle.putString("maxHydr", maxHydr);
-                        bundle.putString("minUV", minUV);
-                        bundle.putString("maxUV", maxUV);
-                        statsFragment.setArguments(bundle);
+                        Bundle measurements = new Bundle();
+                        measurements.putString("currentTemp", currentTemp);
+                        measurements.putString("currentHum", currentHum);
+                        measurements.putString("currentHydr", currentHydr);
+                        measurements.putString("currentUV", currentUV);
+                        measurements.putString("minTemp", minTemp);
+                        measurements.putString("maxTemp", maxTemp);
+                        measurements.putString("minHum", minHum);
+                        measurements.putString("maxHum", maxHum);
+                        measurements.putString("minHydr", minHydr);
+                        measurements.putString("maxHydr", maxHydr);
+                        measurements.putString("minUV", minUV);
+                        measurements.putString("maxUV", maxUV);
+                        statsFragment.setArguments(measurements);
+
+                        statsAreEmpty = false;
                         getSupportFragmentManager().beginTransaction().replace(R.id.FragmentFL, statsFragment).commit();
                     } else {
+                        statsAreEmpty = true;
+                        getSupportFragmentManager().beginTransaction().replace(R.id.FragmentFL, statsFragmentEmpty).commit();
                         Toast.makeText(ManagementActivity.this, "There are not measurements yet", Toast.LENGTH_SHORT).show();
                     }
                 }

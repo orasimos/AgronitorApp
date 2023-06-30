@@ -6,13 +6,9 @@ import gr.aueb.cf.agronitor.repository.*;
 import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class MeasurementsUpdater {
 
-//    private ScheduledExecutorService scheduler;
     private final GreenhouseRepository greenhouseRepository;
     private final TemperatureRepository temperatureRepository;
     private final HumidityRepository humidityRepository;
@@ -29,15 +25,7 @@ public class MeasurementsUpdater {
         this.humidityRepository = humidityRepository;
         this.soilHydrationRepository = soilHydrationRepository;
         this.uvRadiationRepository = uvRadiationRepository;
-//        scheduler = Executors.newSingleThreadScheduledExecutor();
     }
-
-//    public void startUpdatingMeasurements() {
-//    }
-//
-//    public void stopUpdatingMeasurements() {
-//        scheduler.shutdown();
-//    }
 
     @Transactional
     public void updateGreenhouseMeasurements() {

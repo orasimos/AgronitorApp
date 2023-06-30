@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import gr.aueb.cf.agronitor.R;
 
+/**
+ * A Fragment that displays the stats for a specific greenhouse.
+ */
 public class StatsFragment extends Fragment {
 
 //    Temperature

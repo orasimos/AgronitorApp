@@ -104,7 +104,6 @@ public class MeasurementsRestController {
             measurementsDTO.setMaxHydr(maxHydr);
             measurementsDTO.setMinUV(minUV);
             measurementsDTO.setMaxUV(maxUV);
-
             return new ResponseEntity<>(measurementsDTO, HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             LoggerUtil.getCurrentLogger().warning(e.getMessage());

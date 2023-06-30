@@ -1,16 +1,17 @@
 package gr.aueb.cf.agronitor.models;
 
-import org.json.JSONObject;
+import java.util.Objects;
 
-import java.util.ArrayList;
-
+/**
+ * Represents a greenhouse entity
+ */
 public class Greenhouse {
 
     private Long id;
     private String greenhouseName;
     private Long userId;
 
-    //    Constructor
+    //    Constructors
     public Greenhouse(String greenhouseName) {
         this.greenhouseName = greenhouseName;
     }
@@ -38,5 +39,30 @@ public class Greenhouse {
     }
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+//    equals(), hashCode(), toString()
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Greenhouse that = (Greenhouse) o;
+        return Objects.equals(id, that.id)
+                && Objects.equals(greenhouseName, that.greenhouseName)
+                && Objects.equals(userId, that.userId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, greenhouseName, userId);
+    }
+
+    @Override
+    public String toString() {
+        return "Greenhouse{" +
+                "id=" + id +
+                ", greenhouseName='" + greenhouseName + '\'' +
+                ", userId=" + userId +
+                '}';
     }
 }
