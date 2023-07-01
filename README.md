@@ -26,7 +26,8 @@ It displays data on temperature, humidity, soil hydration, and UV radiation leve
 The api documentation can be found at: http://localhost:8080/swagger-ui/index.html
 
 ## Disclaimer
-Currently the app uses an internal script to update the measurements of each greenhouse in 30 minute intervals.
+- The android app is optimized for the pixel 6.
+- Currently the app uses an internal script to update the measurements of each greenhouse in 30 minute intervals.
 The ultimate goal of the app is to use an arduino with temperature, humidity, soil hydration and uv radiation sensors to post real-time measuremnets to the database.
 
 ## Getting Started
